@@ -1,17 +1,16 @@
 ## TODO:
-1. create dynamic page
-2. design components
-3. Add loading page
-4. Add cloudinary support
-5. host it
-6. map with domain
-7. fix navigation
-8. Add skeleton
-9. Add admin page
-10. add admin middleware
-11. Add admin route
-12. Add editor for admin
-13. Look into permissions
-14. Add search feature
-15. Add weather API
-16. 
+
+1. Design components
+2. Add loading page
+3. Add Cloudinary support
+4. Add skeleton
+5. Add admin page
+6. Add admin middleware
+7. Add admin route
+8. Add editor for admin
+9. Look into permissions
+10. Add search feature
+11. Add weather API
+12. Add votes feature for users
+13. Add markdown editor for admin
+14. Add markdown parser for users
