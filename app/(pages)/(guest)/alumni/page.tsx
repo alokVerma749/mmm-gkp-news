@@ -1,8 +1,15 @@
-import getArticles from "@/app/Actions/get-articles/getArticles";
 import { Article } from "../timeline/page";
+import getArticlesAction from "@/app/Actions/get-articles/getArticles";
 
 const Alumni = async () => {
-  const articles: Article[] = await getArticles("alumni");
+  const response: string = await getArticlesAction('alumni');
+  const articles: Article[] = response ? JSON.parse(response as string) : []
+
+  if (articles?.length === 0) {
+    return (
+      <p>Loading</p>
+    )
+  }
 
   return (
     <div>

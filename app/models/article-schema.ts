@@ -1,6 +1,15 @@
-const mongoose = require("mongoose");
+import mongoose, { Document, Schema } from "mongoose";
 
-const articleSchema = new mongoose.Schema({
+export interface Article extends Document {
+  primary_tag: string;
+  secondary_tags: string[];
+  title: string;
+  upvotes: number;
+  downvotes: number;
+  content: string;
+}
+
+const articleSchema: Schema = new mongoose.Schema({
   primary_tag: {
     type: String,
     enum: [
@@ -42,4 +51,4 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.models.Article || mongoose.model('Article', articleSchema);
 
-module.exports = Article;
+export default Article;

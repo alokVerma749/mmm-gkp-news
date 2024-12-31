@@ -1,25 +1,17 @@
-import connect_db from "@/app/config/db";
-import Article from "@/app/models/article-schema";
+'use server'
 
-export interface Article {
-  primary_tag: string;
-  secondary_tags: string[];
-  title: string;
-  upvotes: number;
-  downvotes: number;
-  content: string;
-}
+import { getArticles } from "@/app/services/get-articles";
 
-const getArticles = async (primary_tag?: string): Promise<Article[]> => {
-  await connect_db();
+const getArticlesAction = async (primary_tag?: string): Promise<string> => {
+
   try {
-    const query = primary_tag ? { primary_tag } : {};
-    const articles = await Article.find(query).exec();
-    return articles;
+    const articles = await getArticles(primary_tag)
+
+    return JSON.stringify(articles)
   } catch (error) {
-    console.error("Error fetching articles:", error);
-    return [];
+    console.error("Error in getFoldersAction:", error)
+    return JSON.stringify({ error: error instanceof Error ? error.message : "An unknown error occurred." });
   }
 }
 
-export default getArticles;
+export default getArticlesAction;

@@ -1,4 +1,4 @@
-import getArticles from "@/app/Actions/get-articles/getArticles";
+import getArticlesAction from "@/app/Actions/get-articles/getArticles";
 
 export interface Article {
   primary_tag: string;
@@ -10,7 +10,14 @@ export interface Article {
 }
 
 const CollegeLife = async () => {
-  const articles: Article[] = await getArticles('college_life');
+  const response: string = await getArticlesAction('college_life');
+  const articles: Article[] = response ? JSON.parse(response as string) : []
+
+  if (articles?.length === 0) {
+    return (
+      <p>Loading</p>
+    )
+  }
 
   return (
     <div>
