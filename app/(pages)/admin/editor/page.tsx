@@ -14,7 +14,7 @@ interface FormData {
 }
 
 const Editor: React.FC = () => {
-  const { register, handleSubmit, control, setValue, watch } = useForm<FormData>({
+  const { register, handleSubmit, control, setValue } = useForm<FormData>({
     defaultValues: {
       title: '',
       image: null,
