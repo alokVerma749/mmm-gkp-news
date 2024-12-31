@@ -6,7 +6,7 @@ export const getArticles = async (primary_tag?: string): Promise<ArticleType[]> 
   await connect_db();
 
   try {
-    const query = primary_tag ? { primary_tag } : {};
+    const query = primary_tag !== 'timeline' ? { primary_tag: primary_tag } : {};
     const articles = await Article.find(query).exec();
     return articles;
   } catch (error) {

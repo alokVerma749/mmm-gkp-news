@@ -1,5 +1,7 @@
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
-import TrendingCard from "@/app/components/cards/trending/TrendingCard";
+import { CampusUpdates } from "@/app/components/campusUpdates";
+import { Hero } from "@/app/components/hero";
+import { Trending } from "@/app/components/trending";
 
 export interface Article {
   primary_tag: string;
@@ -14,7 +16,6 @@ type ArticleProps = {
   params: Promise<{ article_tag: string }>;
 };
 
-
 export default async function Article({ params }: ArticleProps) {
   const { article_tag } = await params;
 
@@ -27,11 +28,9 @@ export default async function Article({ params }: ArticleProps) {
 
   return (
     <div>
-      <ul>
-        {articles.map((article, index) => (
-          <TrendingCard key={index} article={article} />
-        ))}
-      </ul>
+      <Hero />
+      <CampusUpdates />
+      <Trending articles={articles} />
     </div>
   );
 }
