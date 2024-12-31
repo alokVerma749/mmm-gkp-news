@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
   };
 }
 
-export default async function Article({ params }: { params: { article_id: string } }) {
+export default async function Article({ params }: ArticleProps) {
   const { article_id } = await params;
 
   const response: string = await getArticleAction(article_id);
