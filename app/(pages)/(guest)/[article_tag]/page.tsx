@@ -1,4 +1,5 @@
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
+import TrendingCard from "@/app/components/cards/trending/TrendingCard";
 
 export interface Article {
   primary_tag: string;
@@ -28,7 +29,7 @@ export default async function Article({ params }: ArticleProps) {
     <div>
       <ul>
         {articles.map((article, index) => (
-          <li key={index}>{article.title}</li>
+          <TrendingCard key={index} article={article} />
         ))}
       </ul>
     </div>
