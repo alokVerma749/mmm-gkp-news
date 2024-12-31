@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Antic } from "next/font/google";
 import "./globals.css";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 const anticFont = Antic({
   weight: "400",
@@ -21,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${anticFont.variable} antialiased`}>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
