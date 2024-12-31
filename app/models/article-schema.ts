@@ -35,6 +35,10 @@ const articleSchema: Schema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  image: {
+    type: String,
+    default: null,
+  },
   upvotes: {
     type: Number,
     default: 0,

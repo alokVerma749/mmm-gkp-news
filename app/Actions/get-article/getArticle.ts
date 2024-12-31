@@ -2,7 +2,6 @@
 
 import { getArticle } from "@/app/services/get-article"
 
-
 const getArticleAction = async (article_id?: string): Promise<string> => {
 
   try {

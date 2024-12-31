@@ -1,5 +1,6 @@
 'use client';
 
+import publishArticleAction from '@/app/Actions/publish-article/publishArticle';
 import { CldUploadButton } from 'next-cloudinary';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
@@ -25,18 +26,18 @@ const Editor: React.FC = () => {
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const onSubmit = (data: FormData) => {
-    console.log('Form Data Submitted:', data);
+  const onSubmit = async (data: FormData) => {
+    const res = await publishArticleAction(data)
+    console.log(res, '###')
   };
 
   const handleImageUpload = (result: any) => {
-    console.log('Upload Result:', result); // Debug the response
     const uploadedImageUrl = result.info.secure_url;
     if (uploadedImageUrl) {
       setValue('image', uploadedImageUrl);
       setImagePreview(uploadedImageUrl);
     }
-  };  
+  };
 
   const primaryTags = [
     'department',
@@ -55,7 +56,7 @@ const Editor: React.FC = () => {
   return (
     <div className="p-8 max-w-4xl mx-auto bg-gray-900 text-gray-200 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-gray-100">Create/Edit Article</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(async (data) => await onSubmit(data))} className="space-y-4">
         {/* Title */}
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-400">Title</label>
