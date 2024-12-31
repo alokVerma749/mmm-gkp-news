@@ -1,14 +1,6 @@
 import { Metadata } from "next";
 import getArticleAction from "@/app/Actions/get-article/getArticle";
-
-export interface Article {
-  primary_tag: string;
-  secondary_tags: string[];
-  title: string;
-  upvotes: number;
-  downvotes: number;
-  content: string;
-}
+import { Article as ArticleType  } from "@/app/types/article";
 
 type ArticleProps = {
   params: Promise<{ article_id: string }>; // Note: Keeping this async if required
@@ -18,7 +10,7 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
   const { article_id } = await params;
 
   const response: string = await getArticleAction(article_id);
-  const article: Article | null = response ? JSON.parse(response) : null;
+  const article: ArticleType | null = response ? JSON.parse(response) : null;
 
   if (!article) {
     return {
@@ -37,7 +29,7 @@ export default async function Article({ params }: ArticleProps) {
   const { article_id } = await params;
 
   const response: string = await getArticleAction(article_id);
-  const article: Article | null = response ? JSON.parse(response) : null;
+  const article: ArticleType | null = response ? JSON.parse(response) : null;
 
   if (!article) {
     return <p>No articles found</p>;
