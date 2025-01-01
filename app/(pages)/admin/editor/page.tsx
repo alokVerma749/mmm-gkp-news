@@ -2,6 +2,7 @@
 
 import publishArticleAction from '@/app/Actions/publish-article/publishArticle';
 import { CldUploadButton } from 'next-cloudinary';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -87,7 +88,7 @@ const Editor: React.FC = () => {
 
           {imagePreview && (
             <div className="mt-4">
-              <img
+              <Image
                 src={imagePreview}
                 alt="Uploaded Preview"
                 className="w-full h-48 object-cover rounded-lg border border-gray-700"
