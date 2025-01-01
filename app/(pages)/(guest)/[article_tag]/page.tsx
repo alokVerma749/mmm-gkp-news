@@ -34,8 +34,8 @@ export default async function Article({ params }: ArticleProps) {
   }
 
   return (
-    <div className="bg-[#F3F2EA] py-10">
-      <ArticleList articles={articles} />
+    <div className="mt-2">
+      <ArticleList article_tag={article_tag} articles={articles} />
     </div>
   );
 }

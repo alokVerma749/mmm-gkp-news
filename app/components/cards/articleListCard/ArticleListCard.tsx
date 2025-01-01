@@ -5,7 +5,7 @@ import { Article } from '@/app/types/article';
 export const ArticleListCard = ({ article }: { article: Article }) => {
   const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article.image || defaultImage;
-  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 30) + '...' : article.content;
+  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 150) + '...' : article.content;
 
   return (
     <Link href={`/article/${article._id}`}>
@@ -19,9 +19,9 @@ export const ArticleListCard = ({ article }: { article: Article }) => {
             height={200}
           />
           <div className="flex-grow sm:pl-8">
-            <h2 className="title-font font-semibold text-xl text-gray-900">{article.title}</h2>
+            <h2 className="title-font font-semibold text-xl">{article.title}</h2>
             <h3 className="text-gray-500 mb-3 text-lg">{article.primary_tag}</h3>
-            <p className="mb-4 text-[#04594D] font-semibold text-lg">{truncatedContent}</p>
+            <p className="mb-4 text-[#04594D] text-base">{truncatedContent}</p>
             <span className="inline-flex">
               <div className="text-gray-500">
                 <svg
