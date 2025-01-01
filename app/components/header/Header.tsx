@@ -9,7 +9,8 @@ const Header = () => {
     'Placements',
     'College Life',
     'Alumni',
-    'Scholarship',
+    'Admissions',
+    'Scholarships',
   ];
 
   return (
