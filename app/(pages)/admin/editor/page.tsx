@@ -28,7 +28,7 @@ const Editor: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     console.log('Form Data Submitted:', data); // Verify if `image` is populated
-    const res = await publishArticleAction(data);
+    await publishArticleAction(data);
   };
 
   const handleImageUpload = (result: any) => {
