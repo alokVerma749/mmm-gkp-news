@@ -1,6 +1,7 @@
+import { ArticleSkeleton } from "@/app/components/articleSkeleton";
 
 const Loading = () => {
-  return <div>Loading...</div>;
+  return <ArticleSkeleton />;
 };
 
 export default Loading;
