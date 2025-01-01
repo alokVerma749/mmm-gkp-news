@@ -1,4 +1,5 @@
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
+import { ArticleList } from "@/app/components/articleList";
 import { CampusUpdates } from "@/app/components/campusUpdates";
 import { Hero } from "@/app/components/hero";
 import { Trending } from "@/app/components/trending";
@@ -36,10 +37,9 @@ export default async function Article({ params }: ArticleProps) {
   }
 
   return (
-    <div>
-      <Hero />
-      <CampusUpdates />
-      <Trending articles={articles} />
+    <div className="w-3/4 mx-auto mt-2">
+      <ArticleList articles={articles} />
+      <button>View More</button>
     </div>
   );
 }

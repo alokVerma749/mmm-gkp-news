@@ -1,6 +1,6 @@
 import React from 'react'
-import TrendingCard from '../cards/trending/TrendingCard'
 import { Article } from '@/app/types/article'
+import { TrendingCard } from '../cards/trending'
 
 export const Trending = ({ articles }: { articles: Article[] }) => {
   return (

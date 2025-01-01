@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <div>
-      <ul className='flex gap-3 flex-row justify-center align-center'>
+      <ul className='flex gap-3 flex-row justify-center align-center text-white'>
         {tags.map((tag) => (
           <li key={tag}>
             <Link href={`/${tag.toLowerCase().replace(' ', '_')}`}>
