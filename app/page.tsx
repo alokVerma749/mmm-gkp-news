@@ -18,7 +18,7 @@ export default async function Home() {
     return <p>No articles found</p>;
   }
   return (
-    <main className="w-3/4 mx-auto mt-[-16rem] bg-background">
+    <main className="w-3/4 mx-auto mt-[-12.5rem] bg-background">
       <Hero articles={articles} />
       <section className="flex flex-col lg:flex-row mt-4 gap-2 justify-between">
         <CampusUpdates articles={articles} />
