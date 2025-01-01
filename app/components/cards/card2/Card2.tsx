@@ -19,9 +19,9 @@ export const Card2 = ({ article }: { article: Article }) => {
           height={200}
         />
         <div className="flex-grow sm:pl-8">
-          <h2 className="title-font font-medium text-lg text-gray-900">{article.title}</h2>
-          <h3 className="text-gray-500 mb-3">{article.primary_tag}</h3>
-          <p className="mb-4">{truncatedContent}</p>
+          <h2 className="title-font font-medium text-base text-gray-900">{article.title}</h2>
+          <h3 className="text-gray-500 mb-3 text-xs">{article.primary_tag}</h3>
+          <p className="mb-4 text-sm">{truncatedContent}</p>
           <span className="inline-flex">
             <div className="text-gray-500">
               <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">

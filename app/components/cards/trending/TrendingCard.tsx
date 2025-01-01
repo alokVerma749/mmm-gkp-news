@@ -15,11 +15,11 @@ export const TrendingCard = ({ article }: { article: Article }) => {
           alt="team"
           className="flex-shrink-0 rounded-lg"
           src={imageSrc}
-          width={200}
-          height={200}
+          width={150}
+          height={150}
         />
         <div className="flex-grow sm:pl-8">
-          <h2 className="title-font font-medium text-lg text-gray-900">{article.title}</h2>
+          <h2 className="title-font font-medium text-base text-gray-900">{article.title}</h2>
           <h3 className="text-gray-500 mb-3">{article.primary_tag}</h3>
           <p className="mb-4">{truncatedContent}</p>
           <span className="inline-flex">
