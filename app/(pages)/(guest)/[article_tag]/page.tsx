@@ -34,9 +34,9 @@ export default async function Article({ params }: ArticleProps) {
   }
 
   return (
-    <div className="w-3/4 mx-auto mt-2">
+    <div className="bg-[#F3F2EA] py-10">
       <ArticleList articles={articles} />
-      <button>View More</button>
+      <button className="bg-black text-white px-4 py-2 font-semibold rounded-md">View More</button>
     </div>
   );
 }
