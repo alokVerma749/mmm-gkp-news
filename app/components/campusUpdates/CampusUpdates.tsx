@@ -6,7 +6,7 @@ export const CampusUpdates = ({ articles }: { articles: Article[] }) => {
   return (
     <div>
       <h1>Campus Updates</h1>
-      <div className="flex flex-row h-full gap-4">
+      <div className="flex flex-col lg:flex-row h-full gap-4">
         <div className="flex flex-col gap-4">
           {articles.map((article, index) => (
             <Card2 key={index} article={article} />
