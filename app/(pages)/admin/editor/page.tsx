@@ -27,15 +27,19 @@ const Editor: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const onSubmit = async (data: FormData) => {
-    const res = await publishArticleAction(data)
-    console.log(res, '###')
+    console.log('Form Data Submitted:', data); // Verify if `image` is populated
+    const res = await publishArticleAction(data);
   };
 
   const handleImageUpload = (result: any) => {
-    const uploadedImageUrl = result.info.secure_url;
+    console.log('Upload Result:', result);
+    const uploadedImageUrl = result?.info?.secure_url;
     if (uploadedImageUrl) {
-      setValue('image', uploadedImageUrl);
+      console.log('Setting Image Value:', uploadedImageUrl);
+      setValue('image', uploadedImageUrl); // Ensure this updates the form state
       setImagePreview(uploadedImageUrl);
+    } else {
+      console.error('Image URL is invalid');
     }
   };
 
@@ -71,15 +75,15 @@ const Editor: React.FC = () => {
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-400">Upload Image</label>
           <CldUploadButton
-            onUpload={handleImageUpload}
+            onSuccess={handleImageUpload} // For handling upload success
+            onClose={() => console.log('Upload widget closed')} // Triggered when "Done" is clicked
             uploadPreset="mmmgkp-news"
           >
-            <div
-              className="cursor-pointer bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
+            <div className="cursor-pointer bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
               Upload Image
             </div>
           </CldUploadButton>
+
 
           {imagePreview && (
             <div className="mt-4">
