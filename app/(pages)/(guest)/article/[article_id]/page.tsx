@@ -42,8 +42,8 @@ export default async function Article({ params }: ArticleProps) {
   }
 
   return (
-    <div>
-      <div className="w-3/4 mx-auto border border-gray-800 rounded-xl mt-[-12.5rem] shadow-lg shadow-slate-700">
+    <>
+      <div className="w-3/4 mx-auto border border-gray-800 rounded-xl shadow-lg shadow-slate-700 custom-height-1 custom-height-2 custom-height-3">
         <Image
           alt={`${article.title} thumbnail`}
           className="flex-shrink-0 rounded-xl w-full h-96 object-cover object-center"
@@ -74,6 +74,6 @@ export default async function Article({ params }: ArticleProps) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

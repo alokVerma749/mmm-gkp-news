@@ -16,6 +16,24 @@
   }
 }
 
+@media (min-height: 600px) {
+  .custom-height-1 {
+    margin-top: -10rem;
+  }
+}
+
+@media (min-height: 740px) {
+  .custom-height-2 {
+    margin-top: -11.5rem;
+  }
+}
+
+@media (min-height: 750px) {
+  .custom-height-3 {
+    margin-top: -12.5rem;
+  }
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
