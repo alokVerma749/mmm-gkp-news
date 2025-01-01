@@ -1,5 +1,5 @@
 import { Article } from '@/app/types/article'
-import { TrendingListCard } from '../cards/trendingListCard'
+import { ArticleListCard } from '../cards/articleListCard'
 
 export const ArticleList = ({ articles }: { articles: Article[] }) => {
   return (
@@ -7,7 +7,7 @@ export const ArticleList = ({ articles }: { articles: Article[] }) => {
       <h1 className='text-4xl font-semibold p-4'>Trending Headlines</h1>
       <div className='h-[1.5px] w-[98%] mx-auto bg-gray-300'></div>
       {articles.map((article, index) => (
-        <TrendingListCard key={index} article={article} />
+        <ArticleListCard key={index} article={article} />
       ))}
     </div>
   )
