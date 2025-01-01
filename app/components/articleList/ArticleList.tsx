@@ -9,9 +9,11 @@ export const ArticleList = ({ articles, article_tag }: { articles: Article[], ar
       {articles.map((article, index) => (
         <ArticleListCard key={index} article={article} />
       ))}
-      <button className="bg-white border-2 text-lg px-4 py-1 font-semibold rounded-md w-40 place-self-center my-4 active:scale-x-[0.98] transition-all duration-300">
-        View More
-      </button>
+      {
+        (articles.length > 10) && <button className="bg-white border-2 text-lg px-4 py-1 font-semibold rounded-md w-40 place-self-center my-4 active:scale-x-[0.98] transition-all duration-300">
+          View More
+        </button>
+      }
     </div>
   );
 };

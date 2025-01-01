@@ -59,22 +59,22 @@ const Editor: React.FC = () => {
   const secondaryTags = ['CSE', 'IT', 'ITCA', 'MBA', 'MCA'];
 
   return (
-    <div className="p-8 max-w-4xl mx-auto bg-gray-900 text-gray-200 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6 text-gray-100">Create/Edit Article</h1>
+    <div className="p-8 w-3/4 mx-auto rounded-lg shadow-md mt-[-12rem] mb-4 bg-background">
+      <h1 className="text-2xl font-bold mb-6">Create Article</h1>
       <form onSubmit={handleSubmit(async (data) => await onSubmit(data))} className="space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-400">Title</label>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Title</label>
           <input
             {...register('title', { required: 'Title is required' })}
             type="text"
-            className="w-full px-3 py-2 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         {/* Image */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-400">Upload Image</label>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Upload Image</label>
           <CldUploadButton
             onSuccess={handleImageUpload} // For handling upload success
             onClose={() => console.log('Upload widget closed')} // Triggered when "Done" is clicked
@@ -99,17 +99,17 @@ const Editor: React.FC = () => {
 
         {/* Content Editor */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-400">Content</label>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Content</label>
           <textarea
             {...register('content', { required: 'Content is required' })}
             rows={8}
-            className="w-full px-3 py-2 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         {/* Primary Tag */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-400">Primary Tag</label>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Primary Tag</label>
           <Controller
             name="primary_tag"
             control={control}
@@ -117,7 +117,7 @@ const Editor: React.FC = () => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 <option value="">Select a Primary Tag</option>
                 {primaryTags.map((tag) => (
@@ -132,7 +132,7 @@ const Editor: React.FC = () => {
 
         {/* Secondary Tags */}
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-400">Secondary Tags</label>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Secondary Tags</label>
           <div className="flex flex-wrap gap-4">
             {secondaryTags.map((tag) => (
               <label key={tag} className="inline-flex items-center space-x-2">
@@ -140,9 +140,9 @@ const Editor: React.FC = () => {
                   type="checkbox"
                   value={tag}
                   {...register('secondary_tags')}
-                  className="w-4 h-4 text-indigo-500 bg-gray-800 border-gray-700 rounded focus:ring-indigo-500"
+                  className="w-4 h-4 text-indigo-500 rounded focus:ring-indigo-500"
                 />
-                <span className="text-gray-400">{tag}</span>
+                <span className="text-gray-600">{tag}</span>
               </label>
             ))}
           </div>
