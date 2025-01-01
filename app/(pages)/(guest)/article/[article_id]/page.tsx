@@ -42,7 +42,7 @@ export default async function Article({ params }: ArticleProps) {
 
   return (
     <div>
-      <div className="w-3/4 mx-auto border border-gray-800 rounded-xl mt-[-10.5rem] shadow-lg shadow-slate-700">
+      <div className="w-3/4 mx-auto border border-gray-800 rounded-xl mt-[-12.5rem] shadow-lg shadow-slate-700">
         <Image
           alt={`${article.title} thumbnail`}
           className="flex-shrink-0 rounded-xl w-full h-96 object-cover object-center"
@@ -53,7 +53,7 @@ export default async function Article({ params }: ArticleProps) {
       </div>
       <div className="w-3/4 mx-auto mt-16">
         <h1 className="text-xl font-semibold my-2">{article.title}</h1>
-        <p>{article.content}</p>
+        <p className="break-all text-preety">{article.content}</p>
 
         <div className="mt-16">
           <p>Upvotes: {article.upvotes}</p>
