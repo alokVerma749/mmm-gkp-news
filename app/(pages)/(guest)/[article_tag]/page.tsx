@@ -1,8 +1,8 @@
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
 import { ArticleList } from "@/app/components/articleList";
-import { CampusUpdates } from "@/app/components/campusUpdates";
-import { Hero } from "@/app/components/hero";
-import { Trending } from "@/app/components/trending";
+// import { CampusUpdates } from "@/app/components/campusUpdates";
+// import { Hero } from "@/app/components/hero";
+// import { Trending } from "@/app/components/trending";
 import { Article as ArticleType } from "@/app/types/article";
 import { Metadata } from "next";
 
