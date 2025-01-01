@@ -19,7 +19,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   return (
     <html lang="en">
       <body className={`${anticFont.variable} antialiased`}>
-        <div className="h-[25vh] bg-foreground">
+        <div className="h-[45vh] bg-foreground">
           <Header />
         </div>
         <div className="min-h-[50vh]">

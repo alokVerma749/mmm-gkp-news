@@ -9,7 +9,7 @@ export const TrendingCard = ({ article }: { article: Article }) => {
   const truncatedContent = article.content.length > 30 ? article.content.substring(0, 30) + '...' : article.content;
 
   return (
-    <Link href={`/article/${article._id}`} className='border border-red-900 p-4 lg:w-1/2'>
+    <Link href={`/article/${article._id}`} className='border border-red-900 p-4'>
       <div className="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left">
         <Image
           alt="team"
@@ -17,8 +17,6 @@ export const TrendingCard = ({ article }: { article: Article }) => {
           src={imageSrc}
           width={200}
           height={200}
-          // objectFit="cover"
-          // objectPosition="center"
         />
         <div className="flex-grow sm:pl-8">
           <h2 className="title-font font-medium text-lg text-gray-900">{article.title}</h2>

@@ -2,7 +2,6 @@ import Link from 'next/link';
 
 const Header = () => {
   const tags = [
-    'Timeline',
     'Department',
     'Hostel',
     'Library',

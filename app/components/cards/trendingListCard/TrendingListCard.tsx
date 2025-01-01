@@ -16,8 +16,6 @@ export const TrendingListCard = ({ article }: { article: Article }) => {
           src={imageSrc}
           width={200}
           height={200}
-          // objectFit="cover"
-          // objectPosition="center"
         />
         <div className="flex-grow sm:pl-8">
           <h2 className="title-font font-medium text-lg text-gray-900">{article.title}</h2>

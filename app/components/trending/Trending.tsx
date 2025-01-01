@@ -4,10 +4,13 @@ import { TrendingCard } from '../cards/trending'
 
 export const Trending = ({ articles }: { articles: Article[] }) => {
   return (
-    <ul>
-      {articles.map((article, index) => (
-        <TrendingCard key={index} article={article} />
-      ))}
-    </ul>
+    <div>
+      <h1>Trending</h1>
+      <div className='max-width-7xl mx-auto flex flex-col gap-4'>
+        {articles.map((article, index) => (
+          <TrendingCard key={index} article={article} />
+        ))}
+      </div>
+    </div>
   )
 }
