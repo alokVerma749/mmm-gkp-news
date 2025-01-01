@@ -1,4 +1,4 @@
-import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   const tags = [
@@ -11,8 +11,8 @@ const Footer = () => {
 
   return (
     <div className="text-white w-3/4 mx-auto flex items-center justify-center pt-10 gap-20">
-      <h1 className="text-white text-4xl font-thin">MMMGKP</h1>
-      <div className="text-white font-normal">
+        <Link href='/' className="text-white text-4xl font-thin">MMMGKP</Link>
+        <div className="text-white font-normal">
         <ul className="flex gap-4">
           {tags.map((tag) => (
             <li key={tag}>{tag}</li>
