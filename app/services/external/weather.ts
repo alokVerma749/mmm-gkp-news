@@ -6,7 +6,7 @@ const params = {
 	"hourly": "temperature_2m"
 };
 
-export const getCurrentWeather = async () => {
+export const getCurrentWeather = async (): Promise<number | null> => {
   try {
     const url = "https://api.open-meteo.com/v1/forecast";
     const responses = await fetchWeatherApi(url, params);
@@ -34,9 +34,9 @@ export const getCurrentWeather = async () => {
     };
     // Return the current temperature
     const currentTemperature = weatherData.hourly.temperature2m[0];
-    return currentTemperature;
+    return currentTemperature ?? null;
   } catch (error) {
     console.error("Error fetching weather data:", error);
-    return [];
+    return null;
   }
 }

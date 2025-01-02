@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, ChangeEvent } from "react";
+import { getCurrentWeather } from "@/app/services/external/weather";
 
 // Debounce utility with TypeScript types
 function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
@@ -16,6 +17,10 @@ function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const tags: string[] = [
     "Department",
     "Hostel",
@@ -48,6 +53,32 @@ const Header: React.FC = () => {
     handleSearch(searchTerm);
   }, [searchTerm]);
 
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        setLoading(true);
+        const temperature = await getCurrentWeather();
+        setCurrentTemperature(temperature);
+      } catch (err) {
+        setError("Error fetching weather data");
+        console.error("Error fetching weather data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
+  if (loading) {
+    return <div>Loading weather...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -77,7 +108,7 @@ const Header: React.FC = () => {
                 {suggestions.map((suggestion) => (
                   <li key={suggestion}>
                     <Link href={`/${suggestion.toLowerCase().replace(" ", "_")}`}>
-                      <a className="block px-4 py-2 hover:bg-gray-200">{suggestion}</a>
+                      {suggestion}
                     </Link>
                   </li>
                 ))}
@@ -103,7 +134,11 @@ const Header: React.FC = () => {
               </li>
             );
           })}
-          {/* <Weather /> */}
+          {typeof currentTemperature === "number" && (
+            <li className="px-4 py-2">
+              Current Temperature: {currentTemperature.toFixed(1)}°C
+            </li>
+          )}
         </ul>
       </div>
     </div>
