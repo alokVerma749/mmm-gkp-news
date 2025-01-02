@@ -19,11 +19,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="en">
-      <body className={`${anticFont.variable} antialiased`}>
-        <div className="h-[45vh] bg-foreground mb-2">
+      <body className={`${anticFont.variable} antialiased relative`}>
+        <div className="bg-[#020809]">
           <Header />
         </div>
-        <div className="min-h-[50vh]">
+        <div className="min-h-[80vh] w-full bg-[#F3F2EA] pb-6">
           {children}
           <Analytics />
         </div>

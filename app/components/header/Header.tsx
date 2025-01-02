@@ -85,7 +85,7 @@ const Header: React.FC = () => {
 
   return (
     <div className="flex flex-col w-3/4 mx-auto">
-      <div className="flex justify-between items-center py-8">
+      <div className="flex justify-between items-center py-10">
         <Link href="/" className="text-white text-4xl font-thin">
           MMMUT
         </Link>
@@ -119,7 +119,7 @@ const Header: React.FC = () => {
       </div>
 
       <div className="bg-[#1A1A1A]">
-        <ul className="flex justify-between items-center text-white text-base h-full">
+        <ul className="flex justify-between items-center text-white text-base">
           {tags.map((tag) => {
             const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
             const isActive = activePath === tagPath;
