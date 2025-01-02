@@ -1,4 +1,3 @@
-import React from "react";
 import { Article } from "@/app/types/article";
 import { TrendingCard } from "../cards/trending";
 
