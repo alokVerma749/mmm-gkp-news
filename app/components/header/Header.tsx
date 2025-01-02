@@ -1,9 +1,9 @@
 'use client';
 
-import { getCurrentWeather } from "@/app/services/external/weather";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, ChangeEvent } from "react";
+import { Weather } from "../weather";
 
 // Debounce utility with TypeScript types
 function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
@@ -17,7 +17,6 @@ function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [temperature, setTemperature] = useState<number | never[]>();
   const tags: string[] = [
     "Department",
     "Hostel",
@@ -53,20 +52,6 @@ const Header: React.FC = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-
-  // Fetch the current temperature
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const temp = await getCurrentWeather();
-        setTemperature(temp);
-      } catch (error) {
-        console.error("Error fetching weather:", error);
-      }
-    };
-
-    fetchWeather();
-  }, []);
 
   return (
     <div className="flex flex-col w-3/4 mx-auto">
@@ -112,20 +97,14 @@ const Header: React.FC = () => {
               <li key={tag} className="h-full p-2">
                 <Link
                   href={tagPath}
-                  className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"
-                    }`}
+                  className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"}`}
                 >
                   {tag}
                 </Link>
               </li>
             );
           })}
-          {typeof temperature === "number" && (
-            <li className="px-4 py-2">
-              Current Temperature: {temperature.toFixed(1)}°C
-            </li>
-          )}
-
+          <Weather />
         </ul>
       </div>
     </div>

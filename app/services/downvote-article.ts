@@ -1,8 +1,9 @@
+'use server'
+
 import connect_db from '../config/db';
 import Article from '@/app/models/article-schema';
-import { Article as ArticleType } from '../types/article';
 
-export const downvoteArticle = async (article_id: string): Promise<ArticleType | null> => {
+export const downvoteArticle = async (article_id: string): Promise<{ success: boolean; message: string; }> => {
   await connect_db();
 
   try {
@@ -16,7 +17,7 @@ export const downvoteArticle = async (article_id: string): Promise<ArticleType |
       throw new Error("Article not found");
     }
 
-    return article;
+    return { success: true, message: 'Article downvoted successfully' };
   } catch (error) {
     console.error("Error upvoting article:", error);
     throw new Error("Failed to upvote the article.");

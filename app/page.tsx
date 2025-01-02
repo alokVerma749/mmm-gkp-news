@@ -17,6 +17,7 @@ export default async function Home() {
   if (articles.length === 0) {
     return <p>No articles found</p>;
   }
+
   return (
     <main className="w-3/4 mx-auto mt-[-12.5rem] bg-background">
       <Hero articles={articles} />

@@ -1,8 +1,12 @@
+'use server'
+
 import Image from "next/image";
 import { Metadata } from "next";
+import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import getArticleAction from "@/app/Actions/get-article/getArticle";
 import { Article as ArticleType } from "@/app/types/article";
-import { ArrowBigDown, ArrowBigUp } from "lucide-react";
+import downvoteArticleAction from "@/app/Actions/downvote-article/downvoteArticle";
+import upvoteArticleAction from "@/app/Actions/upvote-article/upvoteArticle";
 
 type ArticleProps = {
   params: Promise<{ article_id: string }>; // Note: Keeping this async if required
@@ -41,6 +45,18 @@ export default async function Article({ params }: ArticleProps) {
     return <p>No articles found</p>;
   }
 
+  async function onUpvote(data: FormData) {
+    'use server'
+
+    await upvoteArticleAction(data)
+  }
+
+  async function onDownvote(data: FormData) {
+    'use server'
+
+    await downvoteArticleAction(data)
+  }
+
   return (
     <>
       <div className="w-3/4 mx-auto border border-gray-800 rounded-xl shadow-lg shadow-slate-700 custom-height-1 custom-height-2 custom-height-3">
@@ -53,15 +69,25 @@ export default async function Article({ params }: ArticleProps) {
         />
       </div>
       <div className="flex gap-4 w-3/4 mx-auto mt-16">
-        <button className="flex justify-center items-center bg-[#04594D] text-white px-4 py-1 rounded-md animate-bounce">
-          <ArrowBigUp strokeWidth={1.75} />
-          <p className="text-xs">Upvote</p>
-        </button>
-        <button className="flex justify-center items-center bg-gray-700 text-white px-4 py-1 rounded-md">
-          <ArrowBigDown strokeWidth={1.75} />
-          <p className="text-xs">Downvote</p>
-        </button>
+
+        {/* Upvote Form */}
+        <form action={onUpvote} className="flex justify-center items-center">
+          <input type="hidden" name="article_id" value={article_id} />
+          <button type="submit" className="flex justify-center items-center bg-[#04594D] text-white px-4 py-1 rounded-md animate-bounce">
+            <ArrowBigUp strokeWidth={1.75} />
+            <p className="text-xs">Upvote</p>
+          </button>
+        </form>
+        {/* Downvote Form */}
+        <form action={onDownvote} className="flex justify-center items-center">
+          <input type="hidden" name="article_id" value={article_id} />
+          <button type="submit" className="flex justify-center items-center bg-gray-700 text-white px-4 py-1 rounded-md">
+            <ArrowBigDown strokeWidth={1.75} />
+            <p className="text-xs">Downvote</p>
+          </button>
+        </form>
       </div>
+
       <div className="w-3/4 mx-auto mt-4">
         <h1 className="text-xl font-semibold my-2">{article.title}</h1>
         <p className="break-all text-preety">{article.content}</p>
