@@ -29,14 +29,21 @@ const Editor: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     console.log('Form Data Submitted:', data); // Verify if `image` is populated
-    await publishArticleAction(data);
+    const res = await publishArticleAction(data);
+    if(res.success){
+      //empty the form
+      setValue('title', '');
+      setValue('image', null);
+      setValue('content', '');
+      setValue('primary_tag', '');
+      setValue('secondary_tags', []);
+      setImagePreview(null);
+    }
   };
 
   const handleImageUpload = (result: any) => {
-    console.log('Upload Result:', result);
     const uploadedImageUrl = result?.info?.secure_url;
     if (uploadedImageUrl) {
-      console.log('Setting Image Value:', uploadedImageUrl);
       setValue('image', uploadedImageUrl); // Ensure this updates the form state
       setImagePreview(uploadedImageUrl);
     } else {
