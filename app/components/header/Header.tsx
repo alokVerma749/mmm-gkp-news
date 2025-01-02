@@ -104,7 +104,7 @@ const Header: React.FC = () => {
               </li>
             );
           })}
-          <Weather />
+          {/* <Weather /> */}
         </ul>
       </div>
     </div>
