@@ -1,5 +1,4 @@
 import { TopCard } from "../cards/topcard";
-import { TrendingCard } from "../cards/trending";
 import { Card4 } from "../cards/card4";
 import { Card5 } from "../cards/card5";
 import { Article } from "@/app/types/article";
@@ -7,13 +6,12 @@ import { BottomCard } from "../cards/bottomCard";
 
 export const Hero = ({ articles }: { articles: Article[] }) => {
   return (
-    <div className="w-3/4 mx-auto h-[50dvh] flex flex-row bg-[#FDFDFD]">
-      <div className="grid grid-rows-[75%_25%] w-1/2 p-6">
+    <div className="w-3/4 mx-auto h-[55vh] hidden lg:flex flex-row mt-[-12rem] overflow-hidden">
+      <div className="grid grid-rows-[73%_23%] gap-2 w-1/2">
         <TopCard article={articles[6]} />
-
         <Card5 article={articles[1]} />
       </div>
-      <div className="grid grid-rows-[60%_40%] w-1/2 pb-6">
+      <div className="grid grid-rows-[60%_40%] w-1/2">
         <Card4 article={articles[1]} />
         <BottomCard article={articles[1]} />
       </div>

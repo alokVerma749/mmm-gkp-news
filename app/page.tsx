@@ -19,13 +19,10 @@ export default async function Home() {
   }
 
   return (
-    <main className="w-full">
-      <div className="w-full mx-auto mb-6"
-      >
+    <main>
       <Hero articles={articles} />
-      </div>
-      
-      <section className="w-3/4 mx-auto flex mt-4 gap-6 justify-between">
+
+      <section className="lg:w-3/4 mx-auto flex flex-col lg:flex-row mt-4 gap-6 justify-between">
         <CampusUpdates articles={articles} />
         <Trending articles={articles} />
       </section>

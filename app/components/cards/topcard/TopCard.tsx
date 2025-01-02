@@ -10,7 +10,7 @@ export const TopCard = ({ article }: { article: Article }) => {
   const imageSrc = article.image || defaultImage;
   const truncatedContent =
     article.content.length > 30
-      ? article.content.substring(0, 30) + "..."
+      ? article.content.substring(0, 180) + "..."
       : article.content;
 
   return (
@@ -23,10 +23,8 @@ export const TopCard = ({ article }: { article: Article }) => {
       />
       <div className="absolute text-[#F7F7F4] font-semibold bottom-0 w-full h-full flex flex-col justify-end p-4 bg-gradient-to-t from-black">
         <h1 className="title-font text-lg font-semibold">{article.title}</h1>
-        <p className="leading-relaxed">{truncatedContent}</p>
-        <h2 className="tracking-widest text-sm title-font font-semibold">
-          {article.primary_tag}
-        </h2>
+        <p className="leading-relaxed font-thin text-sm">{truncatedContent}</p>
+        <h2 className="tracking-widest text-xs title-font font-thin">{article.primary_tag}</h2>
       </div>
     </Link>
   );

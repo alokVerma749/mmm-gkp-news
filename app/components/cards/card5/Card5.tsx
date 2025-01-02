@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/app/types/article';
@@ -9,15 +8,15 @@ export const Card5 = ({ article }: { article: Article }) => {
   const truncatedContent = article.content.length > 30 ? article.content.substring(0, 30) + '...' : article.content;
 
   return (
-    <Link href={`/article/${article._id}`}>
+    <Link href={`/article/${article._id}`} className='h-fit'>
       <div className="h-full flex sm:flex-row flex-col items-center sm:justify-start">
-        <div className="flex-grow">
+        <div>
           <h2 className="title-font font-semibold text-lg text-gray-900">{article.title}</h2>
-          <p className="text-xs text-[#04594D] font-semibold">{truncatedContent}</p>
+          <p className="text-sm text-[#04594D] font-semibold">{truncatedContent}</p>
         </div>
         <Image
           alt="team"
-          className="flex-shrink-0 self-end h-[80%] w-[15%]"
+          className="flex-shrink-0 self-end w-[25%]"
           src={imageSrc}
           width={80}
           height={60}
