@@ -4,12 +4,12 @@ import { TrendingCard } from "../cards/trending";
 
 export const Trending = ({ articles }: { articles: Article[] }) => {
   return (
-    <div className="bg-[#FDFDFD] h-max">
+    <div className="h-max">
       <div>
         <div className="flex justify-between items-center p-4">
           <h1 className="font-semibold text-xl">Trending Headlines</h1>
           <button className="py-1 px-[1.2rem] bg-[#1A1A1A] text-white rounded-md">
-            <a href="#">View All</a>
+            <p className="font-thin">View All</p>
           </button>
         </div>
 

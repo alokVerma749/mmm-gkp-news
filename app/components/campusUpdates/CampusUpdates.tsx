@@ -3,7 +3,7 @@ import { Card2 } from "../cards/card2"
 
 export const CampusUpdates = ({ articles }: { articles: Article[] }) => {
   return (
-    <div>
+    <div className="order-last lg:order-first">
       <div className="flex gap-6 justify-between items-center mb-4">
         <h1 className="font-semibold text-3xl">Campus Updates</h1>
         <div className="h-[2px] bg-[#1A1A1A] flex-1"></div>

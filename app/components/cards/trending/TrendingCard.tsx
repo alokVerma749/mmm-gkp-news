@@ -11,20 +11,18 @@ export const TrendingCard = ({ article }: { article: Article }) => {
   return (
     <Link href={`/article/${article._id}`}>
       <div className="h-full w-full items-center justify-between flex gap-4 sm:flex-row sm:justify-start sm:text-left p-4">
-        <div className='h-full w-1/3'>
         <Image
           alt="team"
-          className="flex-shrink-0 h-full w-full"
+          className="flex-shrink-0 h-full max-w-[25%]"
           src={imageSrc}
           width={150}
           height={150}
         />
-        </div>
-        
+
         <div className="flex-grow w-2/3">
-          <h2 className="title-font font-semibold text-lg text-gray-900">{article.title}</h2>
-          <h3 className="text-gray-500">{article.primary_tag}</h3>
-          <p className="text-[#04594D] font-semibold">{truncatedContent}</p>
+          <h2 className="title-font font-semibold text-base text-gray-900">{article.title}</h2>
+          <h3 className="text-gray-500 text-sm">{article.primary_tag}</h3>
+          <p className="text-[#04594D] text-sm">{truncatedContent}</p>
         </div>
       </div>
     </Link>

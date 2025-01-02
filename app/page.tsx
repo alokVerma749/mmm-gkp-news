@@ -21,7 +21,6 @@ export default async function Home() {
   return (
     <main>
       <Hero articles={articles} />
-
       <section className="lg:w-3/4 mx-auto flex flex-col lg:flex-row mt-4 gap-6 justify-between">
         <CampusUpdates articles={articles} />
         <Trending articles={articles} />
