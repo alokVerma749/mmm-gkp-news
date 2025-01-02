@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Metadata } from "next";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
+import Markdown from 'react-markdown';
 import getArticleAction from "@/app/Actions/get-article/getArticle";
 import { Article as ArticleType } from "@/app/types/article";
 import downvoteArticleAction from "@/app/Actions/downvote-article/downvoteArticle";
@@ -40,7 +41,6 @@ export default async function Article({ params }: ArticleProps) {
   const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article?.image || defaultImage;
 
-
   if (!article) {
     return <p>No articles found</p>;
   }
@@ -68,8 +68,8 @@ export default async function Article({ params }: ArticleProps) {
           height={200}
         />
       </div>
-      <div className="flex gap-4 w-3/4 mx-auto mt-16">
 
+      <div className="flex gap-4 w-3/4 mx-auto mt-16">
         {/* Upvote Form */}
         <form action={onUpvote} className="flex justify-center items-center">
           <input type="hidden" name="article_id" value={article_id} />
@@ -90,7 +90,10 @@ export default async function Article({ params }: ArticleProps) {
 
       <div className="w-3/4 mx-auto mt-4">
         <h1 className="text-xl font-semibold my-2">{article.title}</h1>
-        <p className="break-all text-preety">{article.content}</p>
+
+        <div className="markdown-content">
+          <Markdown>{article.content}</Markdown>
+        </div>
 
         <div className="mt-16">
           <div className="flex justify-center items-center">
