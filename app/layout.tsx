@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react"
 import type { Metadata } from "next";
 import { Antic } from "next/font/google";
 import "./globals.css";
@@ -24,6 +25,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
         </div>
         <div className="min-h-[50vh]">
           {children}
+          <Analytics />
         </div>
         <div className="h-[25vh] bg-foreground">
           <Footer />
