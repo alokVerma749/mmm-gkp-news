@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, ChangeEvent } from "react";
-import { Weather } from "../weather";
 
 // Debounce utility with TypeScript types
 function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
