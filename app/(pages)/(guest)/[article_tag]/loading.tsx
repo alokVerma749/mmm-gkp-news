@@ -1,25 +1,31 @@
 
 export const Loading = () => {
-  return <div className="flex flex-col gap-2 bg-background w-3/4 mx-auto shadow-md py-4 mt-[-13rem]">
-    {/* Articles Skeleton */}
-    <div className="flex flex-col gap-4 px-4">
-      {Array.from({ length: 4 }).map((_, index) => (
-        <div
-          key={index}
-          className="flex flex-col gap-2 p-4 border border-gray-300 rounded-md animate-pulse"
-        >
-          <div className="h-6 w-3/4 bg-gray-300 rounded-md"></div> {/* Title Placeholder */}
-          <div className="h-4 w-full bg-gray-300 rounded-md"></div> {/* Description Line 1 */}
-          <div className="h-4 w-2/3 bg-gray-300 rounded-md"></div> {/* Description Line 2 */}
-        </div>
-      ))}
-    </div>
+  return (
+    <div>
+      <div className="w-full h-[50dvh] mx-auto relative">
+        <div className="w-full h-[60%] bg-foreground absolute top-0 z-0"></div>
 
-    {/* Button Skeleton */}
-    <div className="flex justify-center my-4">
-      <div className="h-10 w-40 bg-gray-300 rounded-md animate-pulse"></div>
-    </div>
-  </div>
+        <div className="relative z-10 w-3/4 mx-auto bg-background">
+          <div className="animate-pulse">
+            <p className="h-24 w-24"></p>
+          </div>
+        </div>
+
+        {/* Skeleton for ArticleList */}
+        <div className="relative z-10 w-3/4 mx-auto bg-background">
+          <div className="animate-pulse">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="flex flex-col gap-2 p-4 border border-gray-300 rounded-md mb-4">
+                <div className="h-6 w-3/4 bg-gray-300 rounded-md"></div> {/* Title Placeholder */}
+                <div className="h-4 w-full bg-gray-300 rounded-md"></div> {/* Description Line 1 */}
+                <div className="h-4 w-2/3 bg-gray-300 rounded-md"></div> {/* Description Line 2 */}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div >
+  )
 };
 
 export default Loading;

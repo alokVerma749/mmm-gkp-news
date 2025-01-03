@@ -44,11 +44,19 @@ export default async function Article({ params }: ArticleProps) {
   const nextArticles: ArticleType[] = response2 ? JSON.parse(response2 as string) : [];
 
   return (
-    <div className="mt-2">
-      {/* Render static initial articles */}
-      <ArticleList article_tag={article_tag} articles={initialArticles} />
-      {/* Enable infinite scroll for additional articles */}
-      <InfiniteScrollList article_tag={article_tag} initialArticles={nextArticles} initialPage={3} />
+    <div>
+      <div className="w-full h-[50dvh] mx-auto relative">
+        <div className="w-full h-[60%] bg-foreground absolute top-0 z-0"></div>
+        {/* Render static initial articles */}
+        <div className="relative z-10">
+          <ArticleList article_tag={article_tag} articles={initialArticles} />
+        </div>
+      </div>
+
+      {/* Infinite scroll for additional articles */}
+      {
+        nextArticles.length > 0 && <InfiniteScrollList article_tag={article_tag} initialArticles={nextArticles} initialPage={3} />
+      }
     </div>
   );
 }

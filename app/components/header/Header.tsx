@@ -90,9 +90,7 @@ const Header: React.FC = () => {
   return (
     <div className="flex flex-col w-3/4 mx-auto gap-10">
       <div className="flex justify-between items-center py-10">
-        <Link href="/" className="text-white text-4xl font-thin">
-          MMMUT
-        </Link>
+        <Link href="/" className="text-white text-4xl font-thin">MMMUT</Link>
         <div>
           <input
             type="text"
@@ -124,8 +122,8 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-[#1A1A1A]">
-        <ul className="flex justify-between items-center text-white text-base">
+      <div className="bg-foreground">
+        <ul className="flex justify-between items-center bg-[#1f1f1f] text-white text-base">
           {tags.map((tag) => {
             const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
             const isActive = activePath === tagPath;
@@ -133,11 +131,10 @@ const Header: React.FC = () => {
               <li key={tag} className="h-full p-2">
                 <Link
                   href={tagPath}
-                  className={`${
-                    isActive
+                  className={`${isActive
                       ? "bg-[#04594D] h-full p-2 font-extralight"
                       : "text-white"
-                  }`}
+                    }`}
                 >
                   {tag}
                 </Link>

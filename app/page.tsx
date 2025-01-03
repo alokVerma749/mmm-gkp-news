@@ -23,12 +23,8 @@ export default async function Home() {
     page: 2,
   });
 
-  const initialArticles: Article[] = response1
-    ? JSON.parse(response1 as string)
-    : [];
-  const nextArticles: Article[] = response2
-    ? JSON.parse(response2 as string)
-    : [];
+  const initialArticles: Article[] = response1 ? JSON.parse(response1 as string) : [];
+  const nextArticles: Article[] = response2 ? JSON.parse(response2 as string) : [];
 
   if (initialArticles.length === 0) {
     return <p>No articles found</p>;
@@ -40,7 +36,7 @@ export default async function Home() {
         <div className="w-full h-[60%] bg-[#020809] absolute top-0"></div>
         <Hero articles={initialArticles} />
       </div>
-      
+
       <section className="lg:w-3/4 mx-auto flex flex-col lg:flex-row mt-4 gap-6 justify-between">
         <div>
           <CampusUpdates articles={initialArticles} />
