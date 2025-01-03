@@ -70,7 +70,7 @@ export const InfiniteScrollList = ({ initialArticles, article_tag, initialPage }
   }, [fetchMoreArticles]);
 
   return (
-    <div className="flex flex-col gap-2 bg-background w-3/4 mx-auto shadow-md py-4 border border-red-900">
+    <div className="flex flex-col gap-2 bg-background w-3/4 mx-auto shadow-md py-4">
       {articles.map((article, index) => (
         <ArticleListCard key={index} article={article} />
       ))}
