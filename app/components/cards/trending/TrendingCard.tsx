@@ -10,7 +10,8 @@ export const TrendingCard = ({ article }: { article: Article }) => {
 
   return (
     <Link href={`/article/${article._id}`}>
-      <div className="h-full w-full items-center justify-between flex gap-4 sm:flex-row sm:justify-start sm:text-left p-4">
+      <div className="h-full w-full items-center justify-between flex sm:flex-row sm:justify-start sm:text-left gap-4 p-6 relative">
+      <div className="w-[90%] mx-auto h-[2] bg-[#dbdbdb] absolute top-0"></div>
         <div className='h-full w-1/3'>
         <Image
           alt="team"

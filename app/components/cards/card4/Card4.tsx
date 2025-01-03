@@ -9,18 +9,20 @@ export const Card4 = ({ article }: { article: Article }) => {
   const imageSrc = article.image || defaultImage;
   const truncatedContent =
     article.content.length > 30
-      ? article.content.substring(0, 500) + "..."
+      ? article.content.substring(0, 200) + "..."
       : article.content;
 
   return (
     <Link href={`/article/${article._id}`}>
       <div className="h-full w-full flex sm:flex-row sm:justify-start text-center sm:text-left p-4 pt-0 bg-[#1A1A1A] text-[#D5D5D5]">
-        <div className="w-1/3 pt-2 pr-2 overflow-hidden">
-          {/* <h2 className="title-font font-medium">{article.title}</h2> */}
-          {/* <h3 className="text-gray-500 mb-3">{article.primary_tag}</h3> */}
-          <p>{truncatedContent}</p>
+        <div className=" flex items-start flex-col justify-between gap-2 w-[30%] pr-4 overflow-hidden">
+        <p className="self-end">{truncatedContent}</p>
+          <h3 className="text-gray-300">
+            {article.primary_tag.toUpperCase()}
+          </h3>
+          
         </div>
-        <div className="w-2/3 relative">
+        <div className="w-[70%] relative">
           <Image
             alt="team"
             className="flex-shrink-0 h-full w-full"
@@ -28,9 +30,8 @@ export const Card4 = ({ article }: { article: Article }) => {
             width={200}
             height={200}
           />
-          <div className="absolute text-[#F7F7F4] font-semibold bottom-0 w-full h-full flex flex-col justify-end p-4 bg-gradient-to-t from-black">
-          <h2 className="">{article.title}</h2>
-
+          <div className="absolute text-[#F7F7F4] bottom-0 w-full h-full flex flex-col justify-end p-4 bg-gradient-to-t from-black">
+            <h2 className="text-lg font-semibold">{article.title}</h2>
           </div>
         </div>
       </div>

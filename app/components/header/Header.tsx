@@ -68,7 +68,7 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col w-3/4 mx-auto">
+    <div className="flex flex-col w-3/4 mx-auto gap-10">
       <div className="flex justify-between items-center py-10">
         <Link href="/" className="text-white text-4xl font-thin">
           MMMUT
