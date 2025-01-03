@@ -1,17 +1,29 @@
-'use server'
+'use server';
 
 import { getArticles } from "@/app/services/get-articles";
+import { Article as ArticleType } from "@/app/types/article";
 
-const getArticlesAction = async (primary_tag?: string): Promise<string> => {
-
-  try {
-    const articles = await getArticles(primary_tag)
-
-    return JSON.stringify(articles)
-  } catch (error) {
-    console.error("Error in getFoldersAction:", error)
-    return JSON.stringify({ error: error instanceof Error ? error.message : "An unknown error occurred." });
-  }
+interface GetArticlesActionProps {
+  primary_tag?: string;
+  limit?: number;
+  page?: number;
 }
+
+const getArticlesAction = async ({ primary_tag, limit = 10, page = 1 }: GetArticlesActionProps): Promise<string> => {
+  try {
+    const articles: ArticleType[] = await getArticles({
+      primary_tag,
+      limit,
+      page,
+    });
+
+    return JSON.stringify(articles);
+  } catch (error) {
+    console.error("Error in getArticlesAction:", error);
+    return JSON.stringify({
+      error: error instanceof Error ? error.message : "An unknown error occurred.",
+    });
+  }
+};
 
 export default getArticlesAction;

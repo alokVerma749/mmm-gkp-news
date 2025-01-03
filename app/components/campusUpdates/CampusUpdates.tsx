@@ -21,11 +21,6 @@ export const CampusUpdates = ({ articles }: { articles: Article[] }) => {
           ))}
         </div>
       </div>
-      <div className="flex justify-center mt-4">
-        <button className="py-2 px-4 bg-[#04594D] text-white">
-          <p>View More</p>
-        </button>
-      </div>
     </div>
   )
 }
