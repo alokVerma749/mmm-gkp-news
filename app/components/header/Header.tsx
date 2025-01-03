@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -6,7 +6,10 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { getCurrentWeather } from "@/app/services/external/weather";
 
 // Debounce utility with TypeScript types
-function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T {
+function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  delay: number
+): T {
   let timer: NodeJS.Timeout;
   return ((...args: Parameters<T>) => {
     clearTimeout(timer);
@@ -17,7 +20,9 @@ function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,7 +58,6 @@ const Header: React.FC = () => {
     handleSearch(searchTerm);
   }, [searchTerm]);
 
-
   useEffect(() => {
     const fetchWeather = async () => {
       try {
@@ -84,7 +88,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-3/4 mx-auto">
+    <div className="flex flex-col w-3/4 mx-auto gap-10">
       <div className="flex justify-between items-center py-10">
         <Link href="/" className="text-white text-4xl font-thin">
           MMMUT
@@ -107,7 +111,9 @@ const Header: React.FC = () => {
               <ul>
                 {suggestions.map((suggestion) => (
                   <li key={suggestion}>
-                    <Link href={`/${suggestion.toLowerCase().replace(" ", "_")}`}>
+                    <Link
+                      href={`/${suggestion.toLowerCase().replace(" ", "_")}`}
+                    >
                       {suggestion}
                     </Link>
                   </li>
@@ -127,7 +133,11 @@ const Header: React.FC = () => {
               <li key={tag} className="h-full p-2">
                 <Link
                   href={tagPath}
-                  className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"}`}
+                  className={`${
+                    isActive
+                      ? "bg-[#04594D] h-full p-2 font-extralight"
+                      : "text-white"
+                  }`}
                 >
                   {tag}
                 </Link>
