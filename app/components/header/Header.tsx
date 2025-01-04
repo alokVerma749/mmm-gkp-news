@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect, ChangeEvent } from "react";
 import { getCurrentWeather } from "@/app/services/external/weather";
 import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction";
+import { Loader } from "../spinner";
 
 // Custom hook for debounce
 function useDebounce<T>(value: T, delay: number): T {
@@ -75,6 +76,7 @@ const Header: React.FC = () => {
   // Fetch weather data
   useEffect(() => {
     const fetchWeather = async () => {
+      setWeatherLoading(true);
       try {
         const temperature = await getCurrentWeather();
         setCurrentTemperature(temperature);
@@ -149,15 +151,17 @@ const Header: React.FC = () => {
           })}
           {typeof currentTemperature === "number" && (
             <li className="px-4 py-2">
-              Current Temperature: {currentTemperature.toFixed(1)}°C
+              {weatherLoading ? (
+                <Loader variant="small" />
+              ) : weatherError ? (
+                "Error"
+              ) : (
+                <span>Current Temperature: {currentTemperature?.toFixed(1)}°C</span>
+              )}
             </li>
           )}
         </ul>
       </div>
-
-      {/* Weather Loading/Error */}
-      {weatherLoading && <div className="text-white">Loading weather...</div>}
-      {weatherError && <div className="text-red-500">{weatherError}</div>}
     </div>
   );
 };

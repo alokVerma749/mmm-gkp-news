@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Article } from "@/app/types/article";
 import { Card2 } from "../cards/card2";
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
+import { Loader } from "../spinner";
 
 type CampusUpdatesInfiniteScrollProps = {
   initialArticles: Article[];
@@ -82,7 +83,7 @@ export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag, }: Ca
           ))}
         </div>
       </div>
-      {loading && <p className="text-center mt-4">Loading more articles...</p>}
+      {loading && <div className="text-center mt-6"><Loader style="mx-auto" color="green" /></div>}
       {!hasMore && <p className="text-center mt-4">No more articles available.</p>}
     </div>
   );

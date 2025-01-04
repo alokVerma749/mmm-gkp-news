@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Article } from "@/app/types/article";
 import { ArticleListCard } from "@/app/components/cards/articleListCard";
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
+import { Loader } from "../spinner";
 
 type InfiniteScrollListProps = {
   initialArticles: Article[];
@@ -74,7 +75,7 @@ export const InfiniteScrollList = ({ initialArticles, article_tag, initialPage }
       {articles.map((article, index) => (
         <ArticleListCard key={index} article={article} />
       ))}
-      {loading && <p className="text-center text-lg my-4">Loading more articles...</p>}
+      {loading && <div className="text-center text-lg my-4"><Loader style="mx-auto" variant="small" color="green" /></div>}
       {!hasMore && <p className="text-center text-lg my-4">No more articles available.</p>}
     </div>
   );

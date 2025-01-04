@@ -3,13 +3,9 @@ import Article from "@/app/models/article-schema";
 
 export interface GetArticlesSuggestionsOptions {
   search?: string;
-  limit?: number;
 }
 
-export const getArticlesSuggestions = async ({
-  search = "",
-  limit = 10,
-}: GetArticlesSuggestionsOptions): Promise<{ _id: string; title: string }[]> => {
+export const getArticlesSuggestions = async ({ search = "" }: GetArticlesSuggestionsOptions): Promise<{ _id: string; title: string }[]> => {
   await connect_db();
 
   try {
@@ -17,10 +13,7 @@ export const getArticlesSuggestions = async ({
       ? { title: { $regex: search, $options: "i" } } // Case-insensitive regex for matching
       : {};
 
-    const suggestions = await Article.find(query, "_id title") // Select only `_id` and `title`
-      .limit(limit)
-      .exec();
-
+    const suggestions = await Article.find(query, "_id title").exec(); // Select only `_id` and `title`
     return suggestions;
   } catch (error) {
     console.error("Error fetching article suggestions:", error);
