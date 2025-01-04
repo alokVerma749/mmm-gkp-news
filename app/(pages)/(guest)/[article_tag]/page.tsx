@@ -45,8 +45,8 @@ export default async function Article({ params }: ArticleProps) {
 
   return (
     <div>
-      <div className="w-full h-[50dvh] mx-auto relative">
-        <div className="w-full h-[60%] bg-foreground absolute top-0 z-0"></div>
+      <div className="w-full h-full mx-auto relative mb-6">
+        <div className="w-full h-[30%] bg-foreground absolute top-0 z-0"></div>
         {/* Render static initial articles */}
         <div className="relative z-10">
           <ArticleList article_tag={article_tag} articles={initialArticles} />

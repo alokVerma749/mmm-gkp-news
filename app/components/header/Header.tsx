@@ -110,7 +110,7 @@ const Header: React.FC = () => {
             value={searchTerm}
             onChange={handleInputChange}
           />
-          <button className="bg-[#8E4042] text-white px-4 py-1 outline-none">
+          <button className="bg-[#8E4042] text-white px-2 text-sm h-full lg:px-4 py-[0.6] lg:py-1">
             SEARCH
           </button>
 

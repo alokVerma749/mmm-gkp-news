@@ -27,7 +27,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
           <Analytics />
         </div>
-        <div className="h-[25vh] bg-foreground bottom-0">
+        <div className="h-[25vh] bg-foreground">
           <Footer />
         </div>
       </body>

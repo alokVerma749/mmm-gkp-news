@@ -6,7 +6,7 @@ import { BottomCard } from "../cards/bottomCard";
 
 export const Hero = ({ articles }: { articles: Article[] }) => {
   return (
-    <div className="w-3/4 mx-auto h-[50dvh] hidden lg:flex flex-row bg-[#FDFDFD] relative z-10 overflow-hidden">
+    <div className="w-3/4 mx-auto h-0 md:h-[50dvh] lg:flex flex-row bg-[#FDFDFD] relative z-10 overflow-hidden">
       <div className="grid grid-rows-[75%_25%] w-1/2 p-6">
         <TopCard article={articles[6]} />
         <Card5 article={articles[1]} />

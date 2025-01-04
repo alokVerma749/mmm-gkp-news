@@ -11,7 +11,7 @@ export const Card2 = ({ article }: { article: Article }) => {
 
   return (
     <Link href={`/article/${article._id}`} >
-      <div className="grid grid-rows-[55%_40%] overflow-hidden min-h-[45dvh] text-center sm:text-left">
+      <div className="grid grid-rows-[55%_40%] min-h-[45dvh] text-center sm:text-left">
         <div className="h-full w-full border ">
           <Image
             alt="team"
@@ -22,7 +22,7 @@ export const Card2 = ({ article }: { article: Article }) => {
           />
         </div>
 
-        <div className="flex-grow sm:pl-8 p-4 bg-[#FDFDFD]">
+        <div className="flex-grow sm:pl-8 p-4 bg-[#FDFDFD] overflow-hidden">
           <h2 className="title-font font-bold text-base text-gray-900">
             {article.title}
           </h2>

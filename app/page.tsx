@@ -32,7 +32,7 @@ export default async function Home() {
 
   return (
     <main className="w-full">
-      <div className="w-full h-[50dvh] mx-auto mb-6 relative">
+      <div className="w-full h-0 md:h-[50dvh] mx-auto mb-6 relative">
         <div className="w-full h-[60%] bg-[#020809] absolute top-0"></div>
         <Hero articles={initialArticles} />
       </div>

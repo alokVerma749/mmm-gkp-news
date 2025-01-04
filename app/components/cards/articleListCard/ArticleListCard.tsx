@@ -10,7 +10,8 @@ export const ArticleListCard = ({ article }: { article: Article }) => {
 
   return (
     <Link href={`/article/${article._id}`}>
-      <div className="h-full w-full flex flex-col text-center sm:text-left p-4 pb-0">
+      <div className="h-full w-full flex flex-col text-center sm:text-left p-4 pb-0 relative">
+      <div className="bg-gray-300 h-[1.5px] absolute top-0 w-[98%] mx-auto"></div>
         <div className="flex sm:flex-row sm:justify-start">
           <Image
             alt="team"
@@ -31,7 +32,6 @@ export const ArticleListCard = ({ article }: { article: Article }) => {
             </span>
           </div>
         </div>
-        <div className="w-full bg-gray-300 h-[1.5px] mt-4"></div>
       </div>
     </Link>
   );
