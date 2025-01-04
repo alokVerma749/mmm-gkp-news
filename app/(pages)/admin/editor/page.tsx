@@ -66,7 +66,7 @@ const Editor: React.FC = () => {
   const secondaryTags = ['CSE', 'IT', 'ITCA', 'MBA', 'MCA'];
 
   return (
-    <div className="p-8 w-3/4 mx-auto rounded-lg shadow-md mt-[-12rem] mb-4 bg-background">
+    <div className="p-8 w-3/4 mx-auto rounded-lg shadow-md mb-4">
       <h1 className="text-2xl font-bold mb-6">Create Article</h1>
       <form onSubmit={handleSubmit(async (data) => await onSubmit(data))} className="space-y-4">
         {/* Title */}
@@ -98,7 +98,9 @@ const Editor: React.FC = () => {
               <Image
                 src={imagePreview}
                 alt="Uploaded Preview"
-                className="w-full h-48 object-cover rounded-lg border border-gray-700"
+                className="w-full h-64 object-cover rounded-lg border border-gray-700"
+                width={800}
+                height={400}
               />
             </div>
           )}
