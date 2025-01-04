@@ -4,27 +4,31 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, ChangeEvent } from "react";
 import { getCurrentWeather } from "@/app/services/external/weather";
+import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction";
 
-// Debounce utility with TypeScript types
-function debounce<T extends (...args: any[]) => void>(
-  func: T,
-  delay: number
-): T {
-  let timer: NodeJS.Timeout;
-  return ((...args: Parameters<T>) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), delay);
-  }) as T;
+// Custom hook for debounce
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 }
 
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [currentTemperature, setCurrentTemperature] = useState<number | null>(
-    null
-  );
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([]);
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
+  const [weatherError, setWeatherError] = useState<string | null>(null);
 
   const tags: string[] = [
     "Department",
@@ -39,49 +43,51 @@ const Header: React.FC = () => {
   ];
 
   const activePath = usePathname();
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  // Mock API or suggestion source
-  const getSuggestions = (query: string): string[] => {
-    if (!query) return [];
-    return tags.filter((tag) =>
-      tag.toLowerCase().includes(query.toLowerCase())
-    );
-  };
-
-  // Debounced function
-  const handleSearch = debounce((query: string) => {
-    const results = getSuggestions(query);
-    setSuggestions(results);
-  }, 300);
-
+  // Fetch article suggestions
   useEffect(() => {
-    handleSearch(searchTerm);
-  }, [searchTerm]);
+    const fetchSuggestions = async () => {
+      if (!debouncedSearchTerm) {
+        setSuggestions([]);
+        return;
+      }
 
+      try {
+        const response = JSON.parse(await getArticlesSuggestionsAction({ search: debouncedSearchTerm }));
+
+        // Check if the response is valid JSON
+        if (!response) {
+          console.error("Invalid response");
+          return;
+        }
+
+        setSuggestions(response);
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSuggestions([]);
+      }
+    };
+
+    fetchSuggestions();
+  }, [debouncedSearchTerm]);
+
+  // Fetch weather data
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        setLoading(true);
         const temperature = await getCurrentWeather();
         setCurrentTemperature(temperature);
       } catch (err) {
-        setError("Error fetching weather data");
+        setWeatherError("Error fetching weather data");
         console.error("Error fetching weather data:", err);
       } finally {
-        setLoading(false);
+        setWeatherLoading(false);
       }
     };
 
     fetchWeather();
   }, []);
-
-  if (loading) {
-    return <div>Loading weather...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -89,12 +95,15 @@ const Header: React.FC = () => {
 
   return (
     <div className="flex flex-col w-3/4 mx-auto gap-10">
-      <div className="flex justify-between items-center py-10">
-        <Link href="/" className="text-white text-4xl font-thin">MMMUT</Link>
-        <div>
+      {/* Header Section */}
+      <div className="flex justify-between items-center py-10 relative">
+        <Link href="/" className="text-white text-4xl font-thin">
+          MMMUT
+        </Link>
+        <div className="relative">
           <input
             type="text"
-            placeholder="search for headlines"
+            placeholder="Search for headlines"
             className="bg-[#04594D] py-1 px-6 w-[35vw] text-white outline-none focus:ring-0 focus:border-transparent"
             value={searchTerm}
             onChange={handleInputChange}
@@ -107,12 +116,10 @@ const Header: React.FC = () => {
           {suggestions.length > 0 && (
             <div className="bg-white absolute rounded-md mt-2 shadow-lg w-[35vw] max-h-40 overflow-y-auto z-10">
               <ul>
-                {suggestions.map((suggestion) => (
-                  <li key={suggestion}>
-                    <Link
-                      href={`/${suggestion.toLowerCase().replace(" ", "_")}`}
-                    >
-                      {suggestion}
+                {suggestions.map(({ _id, title }) => (
+                  <li key={_id} className="p-2 hover:bg-gray-200">
+                    <Link href={`/article/${_id}`} className="block">
+                      {title}
                     </Link>
                   </li>
                 ))}
@@ -122,7 +129,8 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-foreground">
+      {/* Navigation Section */}
+      <div>
         <ul className="flex justify-between items-center bg-[#1f1f1f] text-white text-base">
           {tags.map((tag) => {
             const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
@@ -131,9 +139,7 @@ const Header: React.FC = () => {
               <li key={tag} className="h-full p-2">
                 <Link
                   href={tagPath}
-                  className={`${isActive
-                      ? "bg-[#04594D] h-full p-2 font-extralight"
-                      : "text-white"
+                  className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"
                     }`}
                 >
                   {tag}
@@ -148,6 +154,10 @@ const Header: React.FC = () => {
           )}
         </ul>
       </div>
+
+      {/* Weather Loading/Error */}
+      {weatherLoading && <div className="text-white">Loading weather...</div>}
+      {weatherError && <div className="text-red-500">{weatherError}</div>}
     </div>
   );
 };
