@@ -3,7 +3,6 @@ export const Loading = () => {
   return (
     <div>
       <div className="w-full h-[50dvh] mx-auto relative">
-        <div className="w-full h-[60%] bg-foreground absolute top-0 z-0"></div>
 
         <div className="relative z-10 w-3/4 mx-auto bg-background">
           <div className="animate-pulse">

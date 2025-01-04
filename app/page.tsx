@@ -17,6 +17,7 @@ export default async function Home() {
     limit: 10,
     page: 1,
   });
+
   const response2: string = await getArticlesAction({
     primary_tag: "timeline",
     limit: 10,

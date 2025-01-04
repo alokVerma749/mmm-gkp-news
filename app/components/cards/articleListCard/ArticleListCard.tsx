@@ -22,7 +22,7 @@ export const ArticleListCard = ({ article }: { article: Article }) => {
           />
           <div className="flex-grow sm:pl-8">
             <h2 className="title-font font-semibold text-xl">{article.title}</h2>
-            <h3 className="text-gray-500 mb-3 text-lg">{article.primary_tag}</h3>
+            <h3 className="text-gray-700 mb-3 text-lg">{article.primary_tag}</h3>
             <p className="mb-4 text-[#04594D] text-base">{truncatedContent}</p>
             <span className="inline-flex">
               <div className="text-gray-500 flex flex-row justify-center items-center">

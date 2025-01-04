@@ -29,7 +29,7 @@ export const TrendingCard = ({ article }: { article: Article }) => {
           <h2 className="font-semibold text-sm lg:text-base text-gray-900">
             {article.title}
           </h2>
-          <h3 className="text-gray-500 text-sm">{article.primary_tag}</h3>
+          <h3 className="text-gray-700 text-sm">{article.primary_tag}</h3>
           <p className="text-[#04594D] text-sm">{truncatedContent}</p>
         </div>
       </div>
