@@ -26,8 +26,12 @@ function useDebounce<T>(value: T, delay: number): T {
 
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([]);
-  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
+  const [suggestions, setSuggestions] = useState<
+    { _id: string; title: string }[]
+  >([]);
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(
+    null
+  );
   const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
   const [weatherError, setWeatherError] = useState<string | null>(null);
   const [sidebar, setSidebar] = useState(false);
@@ -103,7 +107,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10">
+    <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
       {/* Header Section */}
       <div className="flex flex-col w-full lg:flex lg:flex-row gap-6 lg:gap-6 items-center lg:justify-between lg:items-center py-6 lg:py-10 relative">
         <Link
@@ -147,7 +151,11 @@ const Header: React.FC = () => {
               <li key={tag} className="h-0 lg:h-auto p-2">
                 <Link
                   href={tagPath}
-                  className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"}`}
+                  className={`${
+                    isActive
+                      ? "bg-[#04594D] h-full p-2 font-extralight"
+                      : "text-white"
+                  }`}
                 >
                   {tag}
                 </Link>
@@ -161,7 +169,9 @@ const Header: React.FC = () => {
               ) : weatherError ? (
                 "Error"
               ) : (
-                <span>Current Temperature: {currentTemperature?.toFixed(1)}°C</span>
+                <span>
+                  Current Temperature: {currentTemperature?.toFixed(1)}°C
+                </span>
               )}
             </li>
           )}
@@ -199,30 +209,37 @@ const Header: React.FC = () => {
       </div>
 
       {/*Sidebar for mobile device*/}
-      {sidebar && (
-        <div
-          className={`lg:hidden flex flex-col justify-center items-start pl-4 bg-[#1f1f1f] text-white transform transition-all duration-[0.9s] 
-        ${sidebar ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}
-          style={{
-            height: sidebar ? "auto" : "0",
-            opacity: sidebar ? "1" : "0",
-          }}
-        >
-          <ul className="text-sm font-thin w-full">
-            {tags.map((tag) => {
-              const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
-              const isActive = activePath === tagPath;
-              return (
-                <li key={tag} className="p-2 w-full">
-                  <Link href={tagPath} className={`${isActive ? "bg-[#04594D] w-full p-2 block" : "p-2 text-white"}`}>
-                    {tag}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${
+          sidebar ? "max-h-screen" : "max-h-0"
+        }`}
+      >
+        <ul className="flex flex-col lg:flex-row justify-between items-start bg-[#1A1A1A] text-white w-full px-2">
+          {tags.map((tag) => {
+            const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
+            const isActive = activePath === tagPath;
+            return (
+              <li key={tag} className="w-full">
+                <Link
+                  href={tagPath}
+                  className={`py-1 px-2 block text-sm ${
+                    isActive ? "bg-[#04594D]" : "text-white"
+                  }`}
+                >
+                  {tag}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div className="lg:hidden absolute top-2 right-0">
+        {typeof currentTemperature === "number" && (
+          <li className="px-4 py-2 text-white list-none text-sm">
+            {currentTemperature.toFixed(1)}°C
+          </li>
+        )}
+      </div>
     </div>
   );
 };
