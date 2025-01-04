@@ -14,19 +14,19 @@ export const TrendingCard = ({ article }: { article: Article }) => {
 
   return (
     <Link href={`/article/${article._id}`}>
-      <div className="h-full w-full items-center justify-between flex gap-4 sm:flex-row sm:justify-start sm:text-left p-4 relative">
-        <div className="w-[90%] mx-auto h-[2] bg-[#dbdbdb] absolute top-0"></div>
+      <div className="h-full w-full items-center justify-between flex lg:gap-4 sm:flex-row sm:justify-start sm:text-left lg:p-2 relative min-h-28">
+        <div className="w-full lg:w-[98%] lg:mx-auto h-[1.2px] lg:h-[2] bg-[#dbdbdb] absolute top-0"></div>
 
         <Image
           alt="team"
-          className="flex-shrink-0 h-full max-w-[25%]"
+          className="flex-shrink-0 h-full p-2 lg:p-0 max-w-[20%] lg:max-w-[25%]"
           src={imageSrc}
           width={150}
           height={150}
         />
 
-        <div className="flex-grow w-2/3">
-          <h2 className="title-font font-semibold text-base text-gray-900">
+        <div className="flex-grow w-2/3 pr-3 lg:pr-0">
+          <h2 className="font-semibold text-sm lg:text-base text-gray-900">
             {article.title}
           </h2>
           <h3 className="text-gray-500 text-sm">{article.primary_tag}</h3>

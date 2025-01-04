@@ -10,10 +10,12 @@ const Footer = () => {
   ];
 
   return (
-    <div className="mx-auto flex  justify-between pt-10 gap-20 h-full w-3/4">
-      <Link href='/' className="text-white text-4xl font-thin">MMMUT</Link>
-      <div className="text-white font-normal">
-        <ul className="flex flex-wrap gap-4">
+    <div className="w-full flex flex-col items-center lg:mx-auto lg:flex lg:flex-row lg:justify-between gap-4 py-6 lg:py-10 lg:gap-20 lg:h-full lg:w-3/4">
+      <Link href="/" className="text-white text-2xl lg:text-4xl font-thin">
+        MMMUT
+      </Link>
+      <div className="text-white">
+        <ul className="px-4 lg:px-0 flex flex-wrap gap-4 items-center justify-center text-sm lg:text-xl lg:gap-4 font-normal">
           {tags.map((tag) => (
             <li key={tag}>{tag}</li>
           ))}

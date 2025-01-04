@@ -23,8 +23,12 @@ export default async function Home() {
     page: 2,
   });
 
-  const initialArticles: Article[] = response1 ? JSON.parse(response1 as string) : [];
-  const nextArticles: Article[] = response2 ? JSON.parse(response2 as string) : [];
+  const initialArticles: Article[] = response1
+    ? JSON.parse(response1 as string)
+    : [];
+  const nextArticles: Article[] = response2
+    ? JSON.parse(response2 as string)
+    : [];
 
   if (initialArticles.length === 0) {
     return <p>No articles found</p>;
@@ -32,12 +36,12 @@ export default async function Home() {
 
   return (
     <main className="w-full">
-      <div className="w-full h-0 md:h-[50dvh] mx-auto mb-6 relative">
+      <div className="hidden lg:block h-0 w-full md:h-[50dvh] mx-auto mb-6 relative">
         <div className="w-full h-[60%] bg-[#020809] absolute top-0"></div>
         <Hero articles={initialArticles} />
       </div>
 
-      <section className="lg:w-3/4 mx-auto flex flex-col lg:flex-row mt-4 gap-6 justify-between">
+      <section className="lg:w-3/4 mx-auto flex flex-col-reverse lg:flex-row lg:mt-4 gap-6 justify-between bg-[#FDFDFD] lg:bg-transparent">
         <div>
           <CampusUpdates articles={initialArticles} />
           <CampusUpdatesInfiniteScroll

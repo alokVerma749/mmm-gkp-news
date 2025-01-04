@@ -59,11 +59,11 @@ export default async function Article({ params }: ArticleProps) {
 
   return (
     <div className="">
-      <div className="w-full h-[50dvh] mx-auto relative">
+      <div className="w-full mx-auto relative">
         <div className="w-full h-[60%] bg-foreground absolute top-0 z-0"></div>
         {/* Render static initial articles */}
-        <div className="relative z-10">
-          <div className="w-3/4 mx-auto border border-gray-800 rounded-xl shadow-lg shadow-slate-700 custom-height-1 custom-height-2 custom-height-3">
+        <div className="relative z-10 pt-1">
+          <div className="w-3/4 mx-auto border overflow-hidden border-gray-800 rounded-xl shadow-lg shadow-slate-700 custom-height-1 custom-height-2 custom-height-3">
             <Image
               alt={`${article.title} thumbnail`}
               className="flex-shrink-0 rounded-b-xl w-full h-96 object-cover object-center"

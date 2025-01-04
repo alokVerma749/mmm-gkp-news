@@ -7,7 +7,7 @@ export const Trending = ({ articles }: { articles: Article[] }) => {
       <div>
         <div className="flex justify-between items-center p-4">
           <h1 className="font-semibold text-xl">Trending Headlines</h1>
-          <button className="py-1 px-[1.2rem] bg-[#363636] hover:bg-[#1A1A1A] text-white rounded-md active:scale-x-[0.96] transition-all duration-300">
+          <button className="text-xs lg:text-base py-1 px-[1.2rem] bg-[#363636] hover:bg-[#1A1A1A] text-white rounded-md active:scale-x-[0.96] transition-all duration-300">
             <p className="font-thin">View All</p>
           </button>
         </div>

@@ -13,21 +13,24 @@ const anticFont = Antic({
 
 export const metadata: Metadata = {
   title: "MMMUT GKP NEWS",
-  description: "Stay updated with the latest news, events, and updates from MMMUT GKP. Get insights on campus life, departmental activities, hostel news, library resources, upcoming events, placement opportunities, alumni stories, admissions, and scholarships. Your go-to source for all MMMUT GKP updates.",
+  description:
+    "Stay updated with the latest news, events, and updates from MMMUT GKP. Get insights on campus life, departmental activities, hostel news, library resources, upcoming events, placement opportunities, alumni stories, admissions, and scholarships. Your go-to source for all MMMUT GKP updates.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className={`${anticFont.variable} antialiased relative`}>
-        <div className="bg-foreground">
+        <div className="bg-[#1A1A1A] lg:bg-foreground">
           <Header />
         </div>
         <div className="min-h-[80vh] w-full bg-[#F3F2EA]">
           {children}
           <Analytics />
         </div>
-        <div className="h-[25vh] bg-foreground">
+        <div className="h-auto bg-[#1A1A1A] lg:h-[25dvh] lg:bg-foreground">
           <Footer />
         </div>
       </body>

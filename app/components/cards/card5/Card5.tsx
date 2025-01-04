@@ -9,7 +9,7 @@ export const Card5 = ({ article }: { article: Article }) => {
 
   return (
     <Link href={`/article/${article._id}`}>
-      <div className="h-full flex sm:flex-row flex-col items-center sm:justify-start">
+      <div className="h-full flex sm:flex-row flex-col items-center justify-between">
         <div className="">
           <h2 className="title-font font-semibold text-lg text-gray-900">{article.title}</h2>
           <p className="text-sm text-[#04594D]">{truncatedContent}</p>
