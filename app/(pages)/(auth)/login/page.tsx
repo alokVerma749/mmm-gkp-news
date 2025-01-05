@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -25,6 +26,9 @@ const Login = () => {
     const data = await response.json();
 
     if (response.ok) {
+      toast({
+        title: data.message
+      })
       router.push('/admin/editor');
     } else {
       setError(data.message);
@@ -45,8 +49,14 @@ const Login = () => {
 
     if (response.ok) {
       setOtpSent(true);
+      toast({
+        title: data.message
+      })
     } else {
       setError(data.message);
+      toast({
+        title: data.message
+      })
     }
   };
 

@@ -1,4 +1,5 @@
 import { getCurrentWeather } from "@/app/services/external/weather";
+import { toast } from "@/hooks/use-toast";
 
 export const Weather = async () => {
   let currentTemperature = null;
@@ -6,6 +7,9 @@ export const Weather = async () => {
     currentTemperature = await getCurrentWeather();
   } catch (error) {
     console.error("Error fetching weather data:", error);
+    toast({
+      title: 'Error fetching weather data'
+    })
   }
   return (
     <div>

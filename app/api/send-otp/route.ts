@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     await sendOtpToAdminEmail(otp, username, process.env.EMAIL_USER);
 
     // Return success response with cookie
-    return new Response(JSON.stringify({ message: "Login successful" }), { status: 200 });
+    return new Response(JSON.stringify({ message: "OTP sent successfully" }), { status: 200 });
   } catch (error) {
     console.error("Error logging in admin:", error);
     return new Response(

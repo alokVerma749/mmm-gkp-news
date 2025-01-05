@@ -5,6 +5,7 @@ import { Article } from "@/app/types/article";
 import { Card2 } from "../cards/card2";
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
 import { Loader } from "../spinner";
+import { toast } from "@/hooks/use-toast";
 
 type CampusUpdatesInfiniteScrollProps = {
   initialArticles: Article[];
@@ -39,6 +40,9 @@ export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag, }: Ca
         newArticles = response; // if response is already an array
       } catch (error) {
         console.error('Error parsing JSON:', error);
+        toast({
+          title: 'Something went wrong'
+        })
         return; // Early return if JSON parsing fails
       }
 
@@ -50,6 +54,9 @@ export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag, }: Ca
       }
     } catch (error) {
       console.error('Error fetching more articles:', error);
+      toast({
+        title: 'Error fetching more articles'
+      })
     } finally {
       setLoading(false);
     }

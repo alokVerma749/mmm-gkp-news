@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
     // Return success response with cookie
     return new Response(
-      JSON.stringify({ message: "Login successful" }),
+      JSON.stringify({ message: "Login successfully" }),
       {
         status: 200,
         headers: {

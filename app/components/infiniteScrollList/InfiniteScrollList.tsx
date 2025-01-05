@@ -5,6 +5,7 @@ import { Article } from "@/app/types/article";
 import { ArticleListCard } from "@/app/components/cards/articleListCard";
 import getArticlesAction from "@/app/Actions/get-articles/getArticles";
 import { Loader } from "../spinner";
+import { toast } from "@/hooks/use-toast";
 
 type InfiniteScrollListProps = {
   initialArticles: Article[];
@@ -27,7 +28,6 @@ export const InfiniteScrollList = ({ initialArticles, article_tag, initialPage }
         primary_tag: article_tag,
         page: page,
       }));
-      console.log(response, '###')
       // Check if the response is valid JSON
       if (!response) {
         console.error("Invalid response");
@@ -51,6 +51,9 @@ export const InfiniteScrollList = ({ initialArticles, article_tag, initialPage }
       }
     } catch (error) {
       console.error("Error fetching more articles:", error);
+      toast({
+        title: 'Error fetching more articles'
+      })
     } finally {
       setLoading(false);
     }
