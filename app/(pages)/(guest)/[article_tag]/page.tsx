@@ -44,7 +44,7 @@ export default async function Article({ params }: ArticleProps) {
   const nextArticles: ArticleType[] = response2 ? JSON.parse(response2 as string) : [];
 
   return (
-    <div >
+    <div>
       {/* <div className="w-full h-full mx-auto relative mb-6">
         <div className="w-full h-[30%] bg-foreground absolute top-0 z-0"></div>
         <div className="relative z-10">

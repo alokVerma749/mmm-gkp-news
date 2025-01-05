@@ -26,12 +26,8 @@ function useDebounce<T>(value: T, delay: number): T {
 
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<
-    { _id: string; title: string }[]
-  >([]);
-  const [currentTemperature, setCurrentTemperature] = useState<number | null>(
-    null
-  );
+  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([]);
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
   const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
   const [weatherError, setWeatherError] = useState<string | null>(null);
   const [sidebar, setSidebar] = useState(false);
@@ -154,14 +150,7 @@ const Header: React.FC = () => {
             const isActive = activePath === tagPath;
             return (
               <li key={tag} className="h-0 lg:h-auto p-2">
-                <Link
-                  href={tagPath}
-                  className={`${
-                    isActive
-                      ? "bg-[#04594D] h-full p-2 font-extralight"
-                      : "text-white"
-                  }`}
-                >
+                <Link href={tagPath} className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"}`}>
                   {tag}
                 </Link>
               </li>
@@ -183,7 +172,7 @@ const Header: React.FC = () => {
         </ul>
       </div>
 
-      {/* Sidebar Icon */}
+      {/* Sidebar icon for mobile device */}
       <div
         className="text-white text-center lg:hidden flex items-center justify-center h-auto pb-2"
         onClick={handleSidebarToggle}
@@ -214,11 +203,7 @@ const Header: React.FC = () => {
       </div>
 
       {/*Sidebar for mobile device*/}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${
-          sidebar ? "max-h-screen" : "max-h-0"
-        }`}
-      >
+      <div className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${sidebar ? "max-h-screen" : "max-h-0"}`}>
         <ul className="flex flex-col lg:flex-row justify-between items-start bg-[#1A1A1A] text-white w-full pt-0 p-2">
           {tags.map((tag) => {
             const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
@@ -227,9 +212,8 @@ const Header: React.FC = () => {
               <li key={tag} className="w-full">
                 <Link
                   href={tagPath}
-                  className={`py-1 px-2 block text-base ${
-                    isActive ? "bg-[#04594D]" : "text-white"
-                  }`}
+                  className={`py-1 px-2 block text-base ${isActive ? "bg-[#04594D]" : "text-white"
+                    }`}
                 >
                   {tag}
                 </Link>
