@@ -51,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <section className="text-gray-600 body-font flex items-center justify-center mt-[-13rem]">
+    <section className="text-gray-600 body-font flex items-center justify-center">
       <div className="container px-5 py-24 mx-auto flex justify-center items-center">
         <form onSubmit={handleSubmit} className="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col w-full mt-10 md:mt-0">
           <h2 className="text-gray-900 text-lg font-medium title-font mb-5 text-center">Sign In</h2>
