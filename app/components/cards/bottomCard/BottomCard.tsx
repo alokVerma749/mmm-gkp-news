@@ -22,7 +22,7 @@ export const BottomCard = ({ article }: { article: Article }) => {
         <div className="w-[2.5] h-[80%] bg-[#dbdbdb]"></div>
         <div className="flex-grow sm:pl-8 lg:px-4">
           <h2 className="title-font font-bold text-lg">{article.title}</h2>
-          <div className="h-[1.8] w-[90%] bg-[#dbdbdb] my-1"></div>
+          <div className="h-[2px] w-[90%] bg-[#dbdbdb] my-1"></div>
 
           <h3 className="text-gray-500 text-xs">{article.primary_tag}</h3>
           <p className="text-[#04594D] text-sm">{truncatedContent}</p>
