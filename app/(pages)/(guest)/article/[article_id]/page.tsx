@@ -38,7 +38,7 @@ export default async function Article({ params }: ArticleProps) {
   const response: string = await getArticleAction(article_id);
   const article: ArticleType | null = response ? JSON.parse(response) : null;
 
-  const defaultImage ="https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
+  const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article?.image || defaultImage;
 
   if (!article) {
@@ -46,15 +46,15 @@ export default async function Article({ params }: ArticleProps) {
   }
 
   async function onUpvote(data: FormData) {
-    'use server';
+    'use server'
 
-    await upvoteArticleAction(data);
+    await upvoteArticleAction(data)
   }
 
   async function onDownvote(data: FormData) {
     'use server'
 
-    await downvoteArticleAction(data);
+    await downvoteArticleAction(data)
   }
 
   return (
