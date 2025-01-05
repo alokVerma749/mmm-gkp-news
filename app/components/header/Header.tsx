@@ -105,7 +105,7 @@ const Header: React.FC = () => {
   return (
     <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
       {/* Header Section */}
-      <div className="flex flex-col w-full lg:flex lg:flex-row gap-6 lg:gap-6 items-center lg:justify-between lg:items-center py-6 lg:py-10 relative">
+      <div className="flex flex-col w-full lg:flex lg:flex-row gap-14 lg:gap-6 items-center lg:justify-between lg:items-center py-6 lg:py-10 relative">
         <Link
           href="/"
           className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin"
@@ -116,7 +116,7 @@ const Header: React.FC = () => {
           <input
             type="text"
             placeholder="Search for headlines"
-            className="bg-[#04594D] py-[0.5] px-2 lg:py-1 mx-8 lg:px-6 w-full lg:w-[35vw] text-white outline-none focus:ring-0 focus:border-transparent text-sm lg:text-lg"
+            className="bg-[#04594D] py-1 px-2 lg:py-1 mx-8 lg:px-6 w-full lg:w-[35vw] text-white outline-none focus:ring-0 focus:border-transparent text-sm lg:text-lg"
             value={searchTerm}
             onChange={handleInputChange}
           />
@@ -208,7 +208,7 @@ const Header: React.FC = () => {
         className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${sidebar ? "max-h-screen" : "max-h-0"
           }`}
       >
-        <ul className="flex flex-col lg:flex-row justify-between items-start bg-[#1A1A1A] text-white w-full px-2">
+        <ul className="flex flex-col lg:flex-row justify-between items-start bg-[#1A1A1A] text-white w-full pt-0 p-2">
           {tags.map((tag) => {
             const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
             const isActive = activePath === tagPath;
@@ -216,7 +216,7 @@ const Header: React.FC = () => {
               <li key={tag} className="w-full">
                 <Link
                   href={tagPath}
-                  className={`py-1 px-2 block text-sm ${isActive ? "bg-[#04594D]" : "text-white"
+                  className={`py-1 px-2 block text-base ${isActive ? "bg-[#04594D]" : "text-white"
                     }`}
                 >
                   {tag}
