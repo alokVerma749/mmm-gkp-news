@@ -5,12 +5,16 @@ import { Article } from "@/app/types/article";
 import { ArrowBigUp } from "lucide-react";
 
 export const Card2 = ({ article }: { article: Article }) => {
-  const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
+  const defaultImage =
+    "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article.image || defaultImage;
-  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 50) + "..." : article.content;
+  const truncatedContent =
+    article.content.length > 30
+      ? article.content.substring(0, 50) + "..."
+      : article.content;
 
   return (
-    <Link href={`/article/${article._id}`} >
+    <Link href={`/article/${article._id}`}>
       <div className="grid grid-cols-[20%_80%] lg:grid-cols-1 lg:grid lg:grid-rows-[55%_40%] min-h-28 lg:min-h-[45dvh] sm:text-left relative">
         <div className="h-full w-full flex items-center">
           <Image
@@ -26,9 +30,13 @@ export const Card2 = ({ article }: { article: Article }) => {
           <h2 className="font-semibold lg:font-bold text-sm lg:text-lg text-gray-900">
             {article.title}
           </h2>
-          <h3 className="text-gray-500 lg:mb-3 text-xs">{article.primary_tag}</h3>
+          <h3 className="text-gray-500 lg:mb-3 text-xs">
+            {article.primary_tag}
+          </h3>
           <div className="w-full lg:h-[2] bg-[#dbdbdb] lg:mb-2"></div>
-          <p className="lg:mb-4 text-xs lg:text-sm text-[#04594D] lg:font-semibold">{truncatedContent}</p>
+          <p className="lg:mb-4 text-xs lg:text-sm text-[#04594D] lg:font-semibold">
+            {truncatedContent}
+          </p>
           <span className="lg:inline-flex hidden">
             <div className="text-gray-500 flex flex-row justify-center items-center">
               <ArrowBigUp strokeWidth={1.75} />

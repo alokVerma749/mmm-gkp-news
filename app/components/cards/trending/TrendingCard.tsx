@@ -19,7 +19,7 @@ export const TrendingCard = ({ article }: { article: Article }) => {
 
         <Image
           alt="team"
-          className="flex-shrink-0 h-full p-2 lg:p-0 max-w-[20%] lg:max-w-[25%]"
+          className="flex-shrink-0 object-center h-full p-2 lg:p-0 max-w-[20%] lg:max-w-[25%]"
           src={imageSrc}
           width={150}
           height={150}

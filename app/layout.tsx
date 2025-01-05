@@ -26,7 +26,7 @@ export default function RootLayout({
         <div className="bg-[#1A1A1A] lg:bg-foreground">
           <Header />
         </div>
-        <div className="min-h-[80vh] w-full bg-[#F3F2EA]">
+        <div className="min-h-[80vh] w-full bg-[#F3F2EA] lg:pb-6">
           {children}
           <Analytics />
         </div>

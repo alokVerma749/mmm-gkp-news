@@ -26,8 +26,12 @@ function useDebounce<T>(value: T, delay: number): T {
 
 const Header: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([]);
-  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
+  const [suggestions, setSuggestions] = useState<
+    { _id: string; title: string }[]
+  >([]);
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(
+    null
+  );
   const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
   const [weatherError, setWeatherError] = useState<string | null>(null);
   const [sidebar, setSidebar] = useState(false);
@@ -105,27 +109,32 @@ const Header: React.FC = () => {
   return (
     <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
       {/* Header Section */}
-      <div className="flex flex-col w-full lg:flex lg:flex-row gap-14 lg:gap-6 items-center lg:justify-between lg:items-center py-6 lg:py-10 relative">
+      <div className="flex w-full flex-col gap-14 lg:gap-0 items-center justify-between lg:flex-row lg:justify-between py-6 lg:py-10 relative">
         <Link
           href="/"
           className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin"
         >
           MMMUT
         </Link>
-        <div className="relative flex w-full lg:justify-end">
+
+        <div className="relative flex-grow lg:flex-grow-0 w-full lg:w-auto lg:ml-auto px-2 lg:px-0">
           <input
             type="text"
             placeholder="Search for headlines"
-            className="bg-[#04594D] py-1 px-2 lg:py-1 mx-8 lg:px-6 w-full lg:w-[35vw] text-white outline-none focus:ring-0 focus:border-transparent text-sm lg:text-lg"
+            className="bg-[#04594D] py-1 px-2 lg:py-1 lg:px-6 w-full lg:w-[35vw] text-white outline-none focus:ring-0 focus:border-transparent text-sm lg:text-lg rounded-md lg:rounded-none"
             value={searchTerm}
             onChange={handleInputChange}
           />
+
           {/* Suggestions Dropdown */}
           {suggestions.length > 0 && (
-            <div className="bg-white absolute rounded-md mt-2 shadow-lg w-[35vw] max-h-40 overflow-y-auto z-10">
+            <div className="bg-white absolute left-0 lg:left-auto lg:right-0 rounded-md mt-2 shadow-lg w-full lg:w-[35vw] max-h-40 overflow-y-auto z-10">
               <ul>
                 {suggestions.map(({ _id, title }) => (
-                  <li key={_id} className="p-2 hover:bg-gray-200">
+                  <li
+                    key={_id}
+                    className="px-2 py-1 text-sm lg:text-base lg:p-2 hover:bg-gray-200"
+                  >
                     <Link href={`/article/${_id}`} className="block">
                       {title}
                     </Link>
@@ -147,10 +156,11 @@ const Header: React.FC = () => {
               <li key={tag} className="h-0 lg:h-auto p-2">
                 <Link
                   href={tagPath}
-                  className={`${isActive
+                  className={`${
+                    isActive
                       ? "bg-[#04594D] h-full p-2 font-extralight"
                       : "text-white"
-                    }`}
+                  }`}
                 >
                   {tag}
                 </Link>
@@ -173,7 +183,7 @@ const Header: React.FC = () => {
         </ul>
       </div>
 
-      {/* Sidebar for mobile device */}
+      {/* Sidebar Icon */}
       <div
         className="text-white text-center lg:hidden flex items-center justify-center h-auto pb-2"
         onClick={handleSidebarToggle}
@@ -205,8 +215,9 @@ const Header: React.FC = () => {
 
       {/*Sidebar for mobile device*/}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${sidebar ? "max-h-screen" : "max-h-0"
-          }`}
+        className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${
+          sidebar ? "max-h-screen" : "max-h-0"
+        }`}
       >
         <ul className="flex flex-col lg:flex-row justify-between items-start bg-[#1A1A1A] text-white w-full pt-0 p-2">
           {tags.map((tag) => {
@@ -216,8 +227,9 @@ const Header: React.FC = () => {
               <li key={tag} className="w-full">
                 <Link
                   href={tagPath}
-                  className={`py-1 px-2 block text-base ${isActive ? "bg-[#04594D]" : "text-white"
-                    }`}
+                  className={`py-1 px-2 block text-base ${
+                    isActive ? "bg-[#04594D]" : "text-white"
+                  }`}
                 >
                   {tag}
                 </Link>
