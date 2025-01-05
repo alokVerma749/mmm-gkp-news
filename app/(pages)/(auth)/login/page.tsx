@@ -10,7 +10,8 @@ const Login = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [otpSent, setOtpSent] = useState(false);
-  const router = useRouter()
+  const [permission, setPermission] = useState('Publish');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,21 +21,20 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password, otp }),
+      body: JSON.stringify({ username, password, otp, permission }),
     });
 
     const data = await response.json();
 
     if (response.ok) {
       toast({
-        title: data.message
-      })
+        title: data.message,
+      });
       router.push('/admin/editor');
     } else {
       setError(data.message);
     }
   };
-
 
   const handleSendOtp = async () => {
     const response = await fetch('/api/send-otp', {
@@ -42,7 +42,7 @@ const Login = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username }),
+      body: JSON.stringify({ username, password, permission }),
     });
 
     const data = await response.json();
@@ -50,13 +50,13 @@ const Login = () => {
     if (response.ok) {
       setOtpSent(true);
       toast({
-        title: data.message
-      })
+        title: data.message,
+      });
     } else {
       setError(data.message);
       toast({
-        title: data.message
-      })
+        title: data.message,
+      });
     }
   };
 
@@ -77,6 +77,7 @@ const Login = () => {
               required
             />
           </div>
+
           <div className="relative mb-4">
             <label htmlFor="password" className="leading-7 text-sm text-gray-600">Password</label>
             <input
@@ -89,6 +90,24 @@ const Login = () => {
               required
             />
           </div>
+
+          {/* Dropdown for selecting permission */}
+          <div className="relative mb-4">
+            <label htmlFor="permission" className="leading-7 text-sm text-gray-600">Permissions</label>
+            <select
+              id="permission"
+              name="permission"
+              value={permission}
+              onChange={(e) => setPermission(e.target.value)}
+              className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              required
+            >
+              <option value="Read">Publish</option>
+              <option value="Update">Update</option>
+              <option value="Delete">Delete</option>
+            </select>
+          </div>
+
           <div className="relative mb-4">
             <label htmlFor="otp" className="leading-7 text-sm text-gray-600">OTP</label>
             <input
@@ -108,8 +127,13 @@ const Login = () => {
               {otpSent ? 'OTP Sent' : 'Send OTP'}
             </button>
           </div>
+
           {error && <p className="text-red-500 text-xs mb-4">{error}</p>}
-          <button type="submit" className="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg w-full">Sign In</button>
+
+          <button type="submit" className="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg w-full">
+            Sign In
+          </button>
+
           <p className="text-xs text-gray-500 mt-3 text-center">Protected for Admins only.</p>
         </form>
       </div>

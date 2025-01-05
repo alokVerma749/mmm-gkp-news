@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export async function POST(request: Request) {
   try {
-    const { username, password, otp } = await request.json();
+    const { username, password, otp, permission} = await request.json();
 
     // Connect to the database
     await connect_db();
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 
     // Generate JWT token
     const token = jwt.sign(
-      { id: admin._id, username: admin.username },
+      { id: admin._id, username: admin.username, permissions: permission || admin.permissions },
       JWT_SECRET,
       { expiresIn: "30m" }
     );

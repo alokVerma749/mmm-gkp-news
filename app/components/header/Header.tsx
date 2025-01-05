@@ -106,10 +106,7 @@ const Header: React.FC = () => {
     <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
       {/* Header Section */}
       <div className="flex w-full flex-col gap-14 lg:gap-0 items-center justify-between lg:flex-row lg:justify-between py-6 lg:py-10 relative">
-        <Link
-          href="/"
-          className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin"
-        >
+        <Link href="/" className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin" >
           MMMUT
         </Link>
 

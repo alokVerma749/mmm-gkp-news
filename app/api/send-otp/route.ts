@@ -4,7 +4,7 @@ import { generateOtp, sendOtpToAdminEmail } from "@/app/utils/otp-utils";
 
 export async function POST(request: Request) {
   try {
-    const { username } = await request.json();
+    const { username, password, permission } = await request.json();
 
     // Connect to the database
     await connect_db();
@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     await admin.save();
 
     // Send OTP to admin's email
-    await sendOtpToAdminEmail(otp, username, process.env.EMAIL_USER);
+    await sendOtpToAdminEmail(otp, username, password, permission, process.env.EMAIL_USER);
 
     // Return success response with cookie
     return new Response(JSON.stringify({ message: "OTP sent successfully" }), { status: 200 });

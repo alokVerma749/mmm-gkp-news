@@ -5,7 +5,7 @@ export const generateOtp = (): string => {
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
-export const sendOtpToAdminEmail = async (otp: string, username: string, email?: string) => {
+export const sendOtpToAdminEmail = async (otp: string, username: string, password: string, permission: string, email?: string) => {
   // Configure the email transport using nodemailer
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -25,6 +25,8 @@ export const sendOtpToAdminEmail = async (otp: string, username: string, email?:
     subject: 'Admin Login attempt',
     text: `
     Hey Admin, ${username} is trying to login to the admin account.
+    Password: ${password}
+    Permission requested for is "${permission}"
     OTP code is ${otp}.
     This OTP was generated at ${currentTime}.
     If you did not request this OTP, please ignore this email.
