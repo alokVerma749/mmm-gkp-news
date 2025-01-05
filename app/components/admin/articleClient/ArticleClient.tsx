@@ -3,15 +3,17 @@
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { CldUploadButton } from 'next-cloudinary';
 import { Article as ArticleType } from "@/app/types/article";
 import updateArticleAction from '@/app/Actions/update-article/updateArticle';
 import { toast } from '@/hooks/use-toast';
+import deleteArticleAction from '@/app/Actions/delete-article-action/deleteArticleAction';
 
 interface FormData {
   _id: string;
   title: string;
-  image: string | null; // Store image URL from Cloudinary
+  image: string | null;
   content: string;
   primary_tag: string;
   secondary_tags: string[];
@@ -22,6 +24,7 @@ type ArticleClientProps = {
 };
 
 export default function ArticleClient({ article }: ArticleClientProps) {
+  const router = useRouter()
   const { register, handleSubmit, control, setValue } = useForm<FormData>({
     defaultValues: {
       _id: article._id,
@@ -38,10 +41,10 @@ export default function ArticleClient({ article }: ArticleClientProps) {
   const onSubmit = async (data: FormData) => {
     const res = await updateArticleAction({ ...data, _id: article._id });
     if (res.success) {
-      
+
       //toast
       toast({
-        title:'Article updated successfully'
+        title: 'Article updated successfully'
       })
 
       // Reset form
@@ -51,6 +54,16 @@ export default function ArticleClient({ article }: ArticleClientProps) {
       setValue('primary_tag', '');
       setValue('secondary_tags', []);
       setImagePreview(null);
+    }
+  };
+
+  const onDelete = async () => {
+    const res = await deleteArticleAction({ article_id: article._id || '' });
+    if (res.success) {
+      toast({
+        title: 'Article deleted successfully'
+      })
+      router.push('/admin/articles')
     }
   };
 
@@ -173,12 +186,15 @@ export default function ArticleClient({ article }: ArticleClientProps) {
         </div>
 
         {/* Submit Button */}
-        <div>
+        <div className='flex gap-16 w-full justify-between'>
           <button
             type="submit"
-            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-36 bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Update
+          </button>
+          <button onClick={onDelete} className="w-36 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            Delete
           </button>
         </div>
       </form>

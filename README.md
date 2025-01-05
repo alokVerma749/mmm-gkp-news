@@ -5,3 +5,5 @@
 3. Logic for setting trending articles
 4. animate vote buttons - SHUBHAM
 5. Add privacy policy, about..., etc pages - SHUBHAM
+6. check revalidation
+7. provide different level of authoritis to admin (post, update, delete)
