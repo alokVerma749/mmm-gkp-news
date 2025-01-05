@@ -1,6 +1,6 @@
 'use server';
 
-import { getArticles } from "@/app/services/get-articles";
+import { getArticles } from "@/app/services/get-paginated-articles";
 import { Article as ArticleType } from "@/app/types/article";
 
 interface GetArticlesActionProps {

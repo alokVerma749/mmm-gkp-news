@@ -19,10 +19,7 @@ export const getArticles = async ({
     const query = primary_tag && primary_tag !== 'timeline' ? { primary_tag } : {};
     const skip = (page - 1) * limit;
 
-    const articles = await Article.find(query)
-      .limit(limit)
-      .skip(skip)
-      .exec();
+    const articles = await Article.find(query).limit(limit).skip(skip).exec();
 
     return articles;
   } catch (error) {

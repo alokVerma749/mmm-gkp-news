@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import getArticlesAction from "./Actions/get-articles/getArticles";
+import getArticlesAction from "./Actions/get-paginated-articles/getArticles";
 import { Article } from "./types/article";
 import { Hero } from "@/app/components/hero";
 import { Trending } from "@/app/components/trending";

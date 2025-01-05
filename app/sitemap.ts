@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import getArticlesAction from './Actions/get-articles/getArticles';
+import getArticlesAction from './Actions/get-paginated-articles/getArticles';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!process.env.NEXT_PUBLIC_SITE_URL) {

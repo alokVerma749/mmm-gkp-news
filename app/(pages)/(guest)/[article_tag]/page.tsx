@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import getArticlesAction from "@/app/Actions/get-articles/getArticles";
+import getArticlesAction from "@/app/Actions/get-paginated-articles/getArticles";
 import { Article as ArticleType } from "@/app/types/article";
 import { ArticleList } from "@/app/components/articleList";
 import { InfiniteScrollList } from "@/app/components/infiniteScrollList";
@@ -45,11 +45,6 @@ export default async function Article({ params }: ArticleProps) {
 
   return (
     <div>
-      {/* <div className="w-full h-full mx-auto relative mb-6">
-        <div className="w-full h-[30%] bg-foreground absolute top-0 z-0"></div>
-        <div className="relative z-10">
-        </div>
-      </div> */}
       {/* Render static initial articles */}
       <ArticleList article_tag={article_tag} articles={initialArticles} />
 

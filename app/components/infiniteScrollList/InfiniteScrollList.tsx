@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Article } from "@/app/types/article";
 import { ArticleListCard } from "@/app/components/cards/articleListCard";
-import getArticlesAction from "@/app/Actions/get-articles/getArticles";
+import getArticlesAction from "@/app/Actions/get-paginated-articles/getArticles";
 import { Loader } from "../spinner";
 import { toast } from "@/hooks/use-toast";
 

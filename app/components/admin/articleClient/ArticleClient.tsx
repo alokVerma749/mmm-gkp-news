@@ -1,13 +1,15 @@
 'use client';
 
-import publishArticleAction from '@/app/Actions/publish-article/publishArticle';
-import { toast } from '@/hooks/use-toast';
-import { CldUploadButton } from 'next-cloudinary';
-import Image from 'next/image';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import Image from 'next/image';
+import { CldUploadButton } from 'next-cloudinary';
+import { Article as ArticleType } from "@/app/types/article";
+import updateArticleAction from '@/app/Actions/update-article/updateArticle';
+import { toast } from '@/hooks/use-toast';
 
 interface FormData {
+  _id: string;
   title: string;
   image: string | null; // Store image URL from Cloudinary
   content: string;
@@ -15,29 +17,34 @@ interface FormData {
   secondary_tags: string[];
 }
 
-const Editor: React.FC = () => {
+type ArticleClientProps = {
+  article: ArticleType;
+};
+
+export default function ArticleClient({ article }: ArticleClientProps) {
   const { register, handleSubmit, control, setValue } = useForm<FormData>({
     defaultValues: {
-      title: '',
-      image: null,
-      content: '',
-      primary_tag: '',
-      secondary_tags: [],
+      _id: article._id,
+      title: article.title,
+      image: article.image || null,
+      content: article.content,
+      primary_tag: article.primary_tag,
+      secondary_tags: article.secondary_tags || [],
     },
   });
 
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(article.image || null);
 
   const onSubmit = async (data: FormData) => {
-    const res = await publishArticleAction(data);
-    if(res.success){
-
+    const res = await updateArticleAction({ ...data, _id: article._id });
+    if (res.success) {
+      
       //toast
       toast({
-        title:'article published successfully'
+        title:'Article updated successfully'
       })
-      
-      //empty the form
+
+      // Reset form
       setValue('title', '');
       setValue('image', null);
       setValue('content', '');
@@ -50,7 +57,7 @@ const Editor: React.FC = () => {
   const handleImageUpload = (result: any) => {
     const uploadedImageUrl = result?.info?.secure_url;
     if (uploadedImageUrl) {
-      setValue('image', uploadedImageUrl); // Ensure this updates the form state
+      setValue('image', uploadedImageUrl);
       setImagePreview(uploadedImageUrl);
     } else {
       console.error('Image URL is invalid');
@@ -73,8 +80,12 @@ const Editor: React.FC = () => {
 
   return (
     <div className="p-8 w-3/4 mx-auto rounded-lg shadow-md mb-4">
-      <h1 className="text-2xl font-bold mb-6">Create Article</h1>
-      <form onSubmit={handleSubmit(async (data) => await onSubmit(data))} className="space-y-4">
+      <h1 className="text-2xl font-bold mb-6">Edit Article</h1>
+      <div className='flex my-2 gap-2'>
+        <p>Upvotes: {article.upvotes}</p>
+        <p>Downvotes: {article.downvotes}</p>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Title */}
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-600">Title</label>
@@ -89,15 +100,13 @@ const Editor: React.FC = () => {
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-600">Upload Image</label>
           <CldUploadButton
-            onSuccess={handleImageUpload} // For handling upload success
-            onClose={() => console.log('Upload widget closed')} // Triggered when "Done" is clicked
+            onSuccess={handleImageUpload}
             uploadPreset="mmmgkp-news"
           >
             <div className="cursor-pointer bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
               Upload Image
             </div>
           </CldUploadButton>
-
 
           {imagePreview && (
             <div className="mt-4">
@@ -169,12 +178,10 @@ const Editor: React.FC = () => {
             type="submit"
             className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            Submit
+            Update
           </button>
         </div>
       </form>
     </div>
   );
-};
-
-export default Editor;
+}
