@@ -4,6 +4,7 @@ import { Antic } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import { Toaster } from "@/components/ui/toaster";
 
 const anticFont = Antic({
   weight: "400",
@@ -28,6 +29,7 @@ export default function RootLayout({
         </div>
         <div className="min-h-[80vh] w-full bg-[#F3F2EA] lg:pb-6">
           {children}
+          <Toaster />
           <Analytics />
         </div>
         <div className="h-auto bg-[#1A1A1A] lg:h-[25dvh] lg:bg-foreground">

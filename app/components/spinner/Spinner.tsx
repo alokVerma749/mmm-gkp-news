@@ -1,4 +1,4 @@
-import { cn } from "@/app/utils/lib";
+import { cn } from "@/lib/utils";
 import { LoaderIcon, Trash2Icon } from "lucide-react";
 
 interface SpinnerProps {
