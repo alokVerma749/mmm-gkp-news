@@ -11,7 +11,6 @@ export const CarouselCard = ({ article }: { article: Article }) => {
         <div className="absolute top-0 left-0 w-full h-full z-10 flex items-end text-center justify-center text-white bg-gradient-to-t from-black">
         <h1 className="text-xl pb-2">{article.title}</h1>
         </div>
-      
     </div>
   );
 };

@@ -25,12 +25,8 @@ export default async function Home() {
     page: 2,
   });
 
-  const initialArticles: Article[] = response1
-    ? JSON.parse(response1 as string)
-    : [];
-  const nextArticles: Article[] = response2
-    ? JSON.parse(response2 as string)
-    : [];
+  const initialArticles: Article[] = response1 ? JSON.parse(response1 as string) : [];
+  const nextArticles: Article[] = response2 ? JSON.parse(response2 as string) : [];
 
   if (initialArticles.length === 0) {
     return <p>No articles found</p>;
@@ -39,7 +35,7 @@ export default async function Home() {
   return (
     <main className="w-full">
       <div className="lg:hidden w-full h-[30dvh] overflow-hidden">
-        <Carousel articles={initialArticles}/>
+        <Carousel articles={initialArticles} />
       </div>
       <div className="hidden lg:block h-0 w-full md:h-[50dvh] mx-auto mb-6 relative">
         <div className="w-full h-[60%] bg-[#020809] absolute top-0"></div>
