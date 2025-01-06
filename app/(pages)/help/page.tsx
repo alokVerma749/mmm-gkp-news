@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Help = () => {
@@ -8,7 +9,7 @@ const Help = () => {
         Need assistance? We are here to help!
       </p>
       <ul className="list-disc pl-5 space-y-2 text-gray-600">
-        <li>For general queries, email us at <a href="mailto:support@mmmgkp.news" className="text-blue-600">support@mmmgkp.news</a>.</li>
+        <li>For general queries, please <Link href="/contact-us" className="text-blue-600">contact us</Link>.</li>
         <li>Check our FAQs for quick answers.</li>
         <li>Follow us on our social media channels for updates.</li>
       </ul>

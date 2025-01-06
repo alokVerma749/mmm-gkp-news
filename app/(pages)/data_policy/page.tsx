@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const DataPolicy = () => {
@@ -10,7 +11,7 @@ const DataPolicy = () => {
       <ul className="list-disc pl-5 space-y-2 text-gray-600">
         <li>We only collect data essential to provide our services.</li>
         <li>Your data will not be sold or shared with third parties.</li>
-        <li>You can request data deletion by contacting us directly.</li>
+        <li>You can request data deletion by <span className='text-blue-700'> <Link href={'/complaint'}>contacting us</Link></span> directly.</li>
       </ul>
     </div>
   );

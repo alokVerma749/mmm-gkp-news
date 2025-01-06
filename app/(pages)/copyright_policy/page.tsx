@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const CopyrightPolicy = () => {
@@ -8,7 +9,7 @@ const CopyrightPolicy = () => {
         All content on MMMGKP.News is protected under copyright laws. Unauthorized use or reproduction of any content is strictly prohibited.
       </p>
       <p className="text-gray-600">
-        If you believe your copyrighted material has been used without permission, please contact us with relevant details.
+        If you believe your copyrighted material has been used without permission, please <span className='text-blue-700'> <Link href={'/complaint'}>contact us</Link></span> with relevant details.
       </p>
     </div>
   );
