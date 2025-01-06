@@ -14,13 +14,10 @@ const anticFont = Antic({
 
 export const metadata: Metadata = {
   title: "MMMUT GKP NEWS",
-  description:
-    "Stay updated with the latest news, events, and updates from MMMUT GKP. Get insights on campus life, departmental activities, hostel news, library resources, upcoming events, placement opportunities, alumni stories, admissions, and scholarships. Your go-to source for all MMMUT GKP updates.",
+  description: "Stay updated with the latest news, events, and updates from MMMUT GKP. Get insights on campus life, departmental activities, hostel news, library resources, upcoming events, placement opportunities, alumni stories, admissions, and scholarships. Your go-to source for all MMMUT GKP updates.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className={`${anticFont.variable} antialiased relative`}>

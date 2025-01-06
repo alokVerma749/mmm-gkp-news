@@ -6,7 +6,6 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { getCurrentWeather } from "@/app/services/external/weather";
 import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction";
 import { Loader } from "../spinner";
-import HeaderAdmin from "../headerAdmin/HeaderAdmin";
 
 // Custom hook for debounce
 function useDebounce<T>(value: T, delay: number): T {
@@ -25,14 +24,13 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-const Header: React.FC = () => {
+const HeaderAdmin: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([]);
   const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
   const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
   const [weatherError, setWeatherError] = useState<string | null>(null);
   const [sidebar, setSidebar] = useState(false);
-  const [isAdminRoute, setIsAdminRoute] = useState(false);
 
   const tags: string[] = [
     "Department",
@@ -96,11 +94,6 @@ const Header: React.FC = () => {
     fetchWeather();
   }, []);
 
-  // Determine if the route is admin
-  useEffect(() => {
-    setIsAdminRoute(activePath.startsWith("/admin"));
-  }, [activePath]);
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -109,15 +102,11 @@ const Header: React.FC = () => {
     setSidebar(!sidebar);
   };
 
-  if (isAdminRoute) {
-    return <HeaderAdmin />;
-  }
-
   return (
     <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
       {/* Header Section */}
       <div className="flex w-full flex-col gap-14 lg:gap-0 items-center justify-between lg:flex-row lg:justify-between py-6 lg:py-10 relative">
-        <Link href="/" className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin" >MMMUT</Link>
+        <Link href="/admin/articles" className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin" >ADMIN</Link>
 
         <div className="relative flex-grow lg:flex-grow-0 w-full lg:w-auto lg:ml-auto px-2 lg:px-0">
           <input
@@ -137,7 +126,7 @@ const Header: React.FC = () => {
                     key={_id}
                     className="px-2 py-1 text-sm lg:text-base lg:p-2 hover:bg-gray-200"
                   >
-                    <Link href={`/article/${_id}`} className="block">
+                    <Link href={`/admin/article/${_id}`} className="block">
                       {title}
                     </Link>
                   </li>
@@ -152,7 +141,7 @@ const Header: React.FC = () => {
       <div className="h-0 lg:h-auto">
         <ul className="h-0 lg:h-auto hidden lg:visible lg:flex justify-between items-center bg-[#1f1f1f] text-white text-base">
           {tags.map((tag) => {
-            const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
+            const tagPath = `/admin/articles/${tag.toLowerCase().replace(" ", "_")}`;
             const isActive = activePath === tagPath;
             return (
               <li key={tag} className="h-0 lg:h-auto p-2">
@@ -179,10 +168,7 @@ const Header: React.FC = () => {
       </div>
 
       {/* Sidebar icon for mobile device */}
-      <div
-        className="text-white text-center lg:hidden flex items-center justify-center h-auto pb-2"
-        onClick={handleSidebarToggle}
-      >
+      <div className="text-white text-center lg:hidden flex items-center justify-center h-auto pb-2" onClick={handleSidebarToggle}>
         {sidebar ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -218,8 +204,7 @@ const Header: React.FC = () => {
               <li key={tag} className="w-full">
                 <Link
                   href={tagPath}
-                  className={`py-1 px-2 block text-base ${isActive ? "bg-[#04594D]" : "text-white"
-                    }`}
+                  className={`py-1 px-2 block text-base ${isActive ? "bg-[#04594D]" : "text-white"}`}
                 >
                   {tag}
                 </Link>
@@ -239,4 +224,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default HeaderAdmin;
