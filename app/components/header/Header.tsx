@@ -121,7 +121,7 @@ const Header: React.FC = () => {
 
           {/* Suggestions Dropdown */}
           {suggestions.length > 0 && (
-            <div className="bg-white absolute left-0 lg:left-auto lg:right-0 rounded-md mt-2 shadow-lg w-full lg:w-[35vw] max-h-40 overflow-y-auto z-10">
+            <div className="bg-white absolute left-0 lg:left-auto lg:right-0 rounded-md mt-2 shadow-lg w-full lg:w-[35vw] max-h-40 overflow-y-auto z-50">
               <ul>
                 {suggestions.map(({ _id, title }) => (
                   <li
