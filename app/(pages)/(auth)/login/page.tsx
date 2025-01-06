@@ -10,7 +10,7 @@ const Login = () => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [otpSent, setOtpSent] = useState(false);
-  const [permission, setPermission] = useState('Publish');
+  const [permission, setPermission] = useState('PUBLISH');
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,7 +30,7 @@ const Login = () => {
       toast({
         title: data.message,
       });
-      router.push('/admin/editor');
+      router.push('/admin/articles');
     } else {
       setError(data.message);
     }
@@ -102,9 +102,9 @@ const Login = () => {
               className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-2 px-3 leading-8 transition-colors duration-200 ease-in-out"
               required
             >
-              <option value="Read">Publish</option>
-              <option value="Update">Update</option>
-              <option value="Delete">Delete</option>
+              <option value="PUBLISH">Publish</option>
+              <option value="UPDATE">Update</option>
+              <option value="DELETE">Delete</option>
             </select>
           </div>
 

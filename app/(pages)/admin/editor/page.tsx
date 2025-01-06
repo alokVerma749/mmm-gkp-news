@@ -4,18 +4,20 @@ import publishArticleAction from '@/app/Actions/publish-article/publishArticle';
 import { toast } from '@/hooks/use-toast';
 import { CldUploadButton } from 'next-cloudinary';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 interface FormData {
   title: string;
-  image: string | null; // Store image URL from Cloudinary
+  image: string | null;
   content: string;
   primary_tag: string;
   secondary_tags: string[];
 }
 
 const Editor: React.FC = () => {
+  const router = useRouter()
   const { register, handleSubmit, control, setValue } = useForm<FormData>({
     defaultValues: {
       title: '',
@@ -29,21 +31,33 @@ const Editor: React.FC = () => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const onSubmit = async (data: FormData) => {
-    const res = await publishArticleAction(data);
-    if(res.success){
+    try {
+      const res = await publishArticleAction(data);
+      if (res.success) {
 
-      //toast
+        //toast
+        toast({
+          title: 'article published successfully'
+        })
+
+        //empty the form
+        setValue('title', '');
+        setValue('image', null);
+        setValue('content', '');
+        setValue('primary_tag', '');
+        setValue('secondary_tags', []);
+        setImagePreview(null);
+      }else {
+        toast({
+          title: 'Updation failed'
+        })
+      }
+    } catch (error) {
+      console.log(error)
       toast({
-        title:'article published successfully'
+        title: 'something went wrong'
       })
-      
-      //empty the form
-      setValue('title', '');
-      setValue('image', null);
-      setValue('content', '');
-      setValue('primary_tag', '');
-      setValue('secondary_tags', []);
-      setImagePreview(null);
+      router.push('/admin/articles');
     }
   };
 

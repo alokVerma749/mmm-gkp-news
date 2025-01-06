@@ -1,9 +1,9 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export enum PermissionLevel {
-  Publish = "Publish",
-  UPDATE = "Update",
-  DELETE = "Delete",
+  Publish = "PUBLISH",
+  UPDATE = "UPDATE",
+  DELETE = "DELETE",
 }
 
 export interface AdminDocument extends Document {

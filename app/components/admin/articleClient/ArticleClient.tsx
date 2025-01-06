@@ -39,31 +39,56 @@ export default function ArticleClient({ article }: ArticleClientProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(article.image || null);
 
   const onSubmit = async (data: FormData) => {
-    const res = await updateArticleAction({ ...data, _id: article._id });
-    if (res.success) {
+    try {
+      const res = await updateArticleAction({ ...data, _id: article._id });
+      if (res.success) {
 
-      //toast
+        //toast
+        toast({
+          title: 'Article updated successfully'
+        })
+
+        // Reset form
+        setValue('title', '');
+        setValue('image', null);
+        setValue('content', '');
+        setValue('primary_tag', '');
+        setValue('secondary_tags', []);
+        setImagePreview(null);
+      } else {
+        toast({
+          title: 'Updation failed'
+        })
+      }
+    } catch (error) {
+      console.log(error)
       toast({
-        title: 'Article updated successfully'
+        title: 'something went wrong'
       })
-
-      // Reset form
-      setValue('title', '');
-      setValue('image', null);
-      setValue('content', '');
-      setValue('primary_tag', '');
-      setValue('secondary_tags', []);
-      setImagePreview(null);
+      router.push('/admin/articles');
     }
+
   };
 
   const onDelete = async () => {
-    const res = await deleteArticleAction({ article_id: article._id || '' });
-    if (res.success) {
+    try {
+      const res = await deleteArticleAction({ article_id: article._id || '' });
+      if (res.success) {
+        toast({
+          title: 'Article deleted successfully'
+        })
+        router.push('/admin/articles')
+      } else {
+        toast({
+          title: 'Deletion failed'
+        })
+      }
+    } catch (error) {
+      console.log(error)
       toast({
-        title: 'Article deleted successfully'
+        title: 'something went wrong'
       })
-      router.push('/admin/articles')
+      router.push('/admin/articles');
     }
   };
 
