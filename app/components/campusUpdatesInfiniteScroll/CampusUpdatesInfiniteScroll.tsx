@@ -78,13 +78,13 @@ export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag, }: Ca
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row gap-4 w-full">
-        <div className="flex flex-col gap-4 lg:w-1/2">
+      <div className="flex flex-col lg:flex-row lg:gap-4 w-full">
+        <div className="flex flex-col lg:gap-4 lg:w-1/2">
           {articles.filter((_, index) => index % 2 === 0).map((article, index) => (
             <Card2 key={index} article={article} />
           ))}
         </div>
-        <div className="flex flex-col gap-4 lg:w-1/2">
+        <div className="flex flex-col lg:gap-4 lg:w-1/2">
           {articles.filter((_, index) => index % 2 !== 0).map((article, index) => (
             <Card2 key={index} article={article} />
           ))}
