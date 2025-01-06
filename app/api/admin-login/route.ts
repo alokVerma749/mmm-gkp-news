@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export async function POST(request: Request) {
   try {
-    const { username, password, otp, permission} = await request.json();
+    const { username, password, otp, permission } = await request.json();
 
     // Connect to the database
     await connect_db();
@@ -30,8 +30,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Optional OTP verification
-    if (otp && admin.otp !== otp) {
+    // OTP verification
+    if (!otp || admin.otp != otp) {
       return new Response(
         JSON.stringify({ message: "Invalid credentials" }),
         { status: 401, headers: { "Content-Type": "application/json" } }
@@ -39,6 +39,11 @@ export async function POST(request: Request) {
     }
 
     // Generate JWT token
+
+    /**
+     * Permissions are only set in headers and cookie for each login
+     * In DB permissions is always 'PUBLISH'
+     */
     const token = jwt.sign(
       { id: admin._id, username: admin.username, permissions: permission || admin.permissions },
       JWT_SECRET,
@@ -50,10 +55,8 @@ export async function POST(request: Request) {
     const cookie = `auth_token=${token}; Path=/; HttpOnly; ${secureFlag} SameSite=Strict; Max-Age=1800`;
 
     // Reset OTP if used
-    if (otp) {
-      admin.otp = null;
-      await admin.save();
-    }
+    admin.otp = null;
+    await admin.save();
 
     // Return success response with cookie
     return new Response(

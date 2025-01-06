@@ -33,7 +33,7 @@ export const updateArticle = async (data: ArticleFormData) => {
     const headerStore = headers();
     const permission = (await headerStore).get('x-admin-permission');
 
-    if (!permission || permission == PermissionLevel.Publish) {
+    if (!permission || permission == PermissionLevel.PUBLISH) {
       throw new Error("Unauthorized: Insufficient permissions.");
     }
 

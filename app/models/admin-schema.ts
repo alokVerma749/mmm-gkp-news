@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export enum PermissionLevel {
-  Publish = "PUBLISH",
+  PUBLISH = "PUBLISH",
   UPDATE = "UPDATE",
   DELETE = "DELETE",
 }
@@ -31,7 +31,7 @@ const adminLoginSchema: Schema = new mongoose.Schema(
       type: String,
       enum: Object.values(PermissionLevel),
       required: true,
-      default: PermissionLevel.Publish,
+      default: PermissionLevel.PUBLISH,
     },
   },
   { timestamps: true }

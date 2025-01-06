@@ -27,7 +27,7 @@ const Register = () => {
     const data = await response.json();
 
     if (response.ok) {
-      router.push('/admin/login');
+      router.push('/login');
     } else {
       setError(data.message);
     }
