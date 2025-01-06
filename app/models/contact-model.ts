@@ -1,10 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface ContactForm extends Document {
+export interface ContactForm extends Document {
   name: string;
   email: string;
   message: string;
   subject: string;
+  viewed: boolean;
 }
 
 const ContactFormSchema: Schema = new Schema(
@@ -24,6 +25,10 @@ const ContactFormSchema: Schema = new Schema(
     subject: {
       type: String,
       required: true,
+    },
+    viewed: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

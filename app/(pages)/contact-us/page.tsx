@@ -43,6 +43,7 @@ const ContactForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-3/4 mx-auto pt-16">
+      <h1 className="text-2xl font-bold text-center mb-6">Contact Us</h1>
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
           Name (Required)
