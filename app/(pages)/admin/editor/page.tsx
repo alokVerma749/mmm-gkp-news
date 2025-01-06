@@ -47,7 +47,7 @@ const Editor: React.FC = () => {
         setValue('primary_tag', '');
         setValue('secondary_tags', []);
         setImagePreview(null);
-      }else {
+      } else {
         toast({
           title: 'Updation failed'
         })
@@ -187,6 +187,7 @@ const Editor: React.FC = () => {
           </button>
         </div>
       </form>
+      <p className="text-xs text-gray-500 mt-3 text-center">Protected for Admins only.</p>
     </div>
   );
 };

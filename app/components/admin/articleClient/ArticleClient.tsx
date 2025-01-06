@@ -223,6 +223,7 @@ export default function ArticleClient({ article }: ArticleClientProps) {
           </button>
         </div>
       </form>
+      <p className="text-xs text-gray-500 mt-3 text-center">Protected for Admins only.</p>
     </div>
   );
 }

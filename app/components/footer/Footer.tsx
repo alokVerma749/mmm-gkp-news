@@ -15,8 +15,8 @@ const Footer = () => {
       <div className="text-gray-300">
         <ul className="px-4 lg:px-0 flex flex-wrap gap-4 items-center justify-center text-sm lg:text-xl lg:gap-4 font-normal">
           {tags.map((tag) => {
-            const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
-            return <Link href={tagPath} className="text-base" key={tag}>{tag}</Link>
+            const tagPath = `/${tag.toLowerCase().replace(/ /g, "_")}`;
+            return <Link href={tagPath} className="text-base" key={tagPath}>{tag}</Link>
           })}
         </ul>
       </div>

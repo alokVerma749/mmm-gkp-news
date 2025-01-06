@@ -40,6 +40,7 @@ export default async function Article({ params }: ArticleProps) {
       {articles.map((article, index) => (
         <ArticleCard key={index} article={article} />
       ))}
+      <p className="text-xs text-gray-500 my-3 text-center">Protected for Admins only.</p>
     </div>
   );
 }

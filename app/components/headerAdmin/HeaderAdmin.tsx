@@ -159,11 +159,12 @@ const HeaderAdmin: React.FC = () => {
                 "Error"
               ) : (
                 <span>
-                  Current Temperature: {currentTemperature?.toFixed(1)}°C
+                  Temperature: {currentTemperature?.toFixed(1)}°C
                 </span>
               )}
             </li>
           )}
+          <Link href={'/admin/editor'} className="px-4 py-2 border-l hidden lg:block">Publish</Link>
         </ul>
       </div>
 
