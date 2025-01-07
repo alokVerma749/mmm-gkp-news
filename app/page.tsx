@@ -53,9 +53,7 @@ export default async function Home() {
       <section className="lg:w-3/4 mx-auto flex flex-col-reverse lg:flex-row lg:mt-4 gap-6 justify-between bg-[#FDFDFD] lg:bg-transparent">
         <div>
           <CampusUpdates articles={initialArticles} />
-          <CampusUpdatesInfiniteScroll
-            initialArticles={nextArticles}
-            articleTag="timeline"
+          <CampusUpdatesInfiniteScroll initialArticles={nextArticles} articleTag="timeline"
           />
         </div>
         <Trending articles={trendingArticles} />

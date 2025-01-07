@@ -45,7 +45,7 @@ export default async function Article({ params }: ArticleProps) {
   }
 
   return (
-    <div className="">
+    <div>
       <div className="w-full mx-auto relative">
         <div className="w-full h-[60%] bg-[#1A1A1A] lg:bg-foreground absolute top-0 z-0"></div>
         {/* Render static initial articles */}
@@ -67,7 +67,7 @@ export default async function Article({ params }: ArticleProps) {
         </div>
 
         <div className=" mt-4">
-          <h1 className="text-xl font-semibold my-2 mb-4">{article.title}</h1>
+          <h1 className="text-3xl font-semibold my-2 mb-4">{article.title}</h1>
           <div className="h-[1.8] w-[80%] bg-[#c7c7c7] my-2 lg:my-4"></div>
           <div className="markdown-content prose prose-lg prose-slate max-w-full">
             <Markdown>{article.content}</Markdown>

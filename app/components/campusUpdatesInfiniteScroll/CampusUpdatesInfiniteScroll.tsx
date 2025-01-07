@@ -12,7 +12,7 @@ type CampusUpdatesInfiniteScrollProps = {
   articleTag: string;
 };
 
-export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag, }: CampusUpdatesInfiniteScrollProps) => {
+export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag }: CampusUpdatesInfiniteScrollProps) => {
   const [articles, setArticles] = useState<Article[]>(initialArticles);
   const [page, setPage] = useState(3); // Start from page 3 since page 1 is already fetched
   const [loading, setLoading] = useState(false);
@@ -76,16 +76,23 @@ export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag, }: Ca
     return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchMoreArticles]);
 
+  // Split articles into two parts
+  const firstHalf = articles.slice(0, Math.ceil(articles.length / 2));
+  const secondHalf = articles.slice(Math.ceil(articles.length / 2));
+
   return (
     <div>
       <div className="flex flex-col lg:flex-row lg:gap-4 w-full">
+        {/* Left section with first half of articles */}
         <div className="flex flex-col lg:gap-4 lg:w-1/2">
-          {articles.filter((_, index) => index % 2 === 0).map((article, index) => (
+          {firstHalf.map((article, index) => (
             <Card2 key={index} article={article} />
           ))}
         </div>
+
+        {/* Right section with second half of articles */}
         <div className="flex flex-col lg:gap-4 lg:w-1/2">
-          {articles.filter((_, index) => index % 2 !== 0).map((article, index) => (
+          {secondHalf.map((article, index) => (
             <Card2 key={index} article={article} />
           ))}
         </div>
