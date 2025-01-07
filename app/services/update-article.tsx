@@ -41,6 +41,7 @@ export const updateArticle = async (data: ArticleFormData) => {
     const updatedArticle = await Article.findByIdAndUpdate(data._id,
       {
         title: data.title,
+        description: data.description,
         image: data.image,
         content: data.content,
         primary_tag: data.primary_tag,
