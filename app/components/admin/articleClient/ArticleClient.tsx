@@ -30,6 +30,7 @@ export default function ArticleClient({ article }: ArticleClientProps) {
     defaultValues: {
       _id: article._id,
       title: article.title,
+      description: article.description,
       image: article.image || null,
       content: article.content,
       primary_tag: article.primary_tag,
@@ -51,6 +52,7 @@ export default function ArticleClient({ article }: ArticleClientProps) {
 
         // Reset form
         setValue('title', '');
+        setValue('description', '');
         setValue('image', null);
         setValue('content', '');
         setValue('primary_tag', '');
@@ -130,6 +132,16 @@ export default function ArticleClient({ article }: ArticleClientProps) {
           <label className="block text-sm font-medium mb-1 text-gray-600">Title</label>
           <input
             {...register('title', { required: 'Title is required' })}
+            type="text"
+            className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Description</label>
+          <input
+            {...register('description', { required: 'Description is required' })}
             type="text"
             className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
