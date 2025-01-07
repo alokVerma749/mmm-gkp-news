@@ -104,6 +104,13 @@ const HeaderAdmin: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
+      <div className='flex flex-row text-white text-base m-2 justify-end w-full mx-auto gap-2'>
+        <Link href={'/admin/contacts'} className="text-sm">Contacts</Link>
+        <Link href={'/admin/surveys'} className="text-sm">Surveys</Link>
+        <Link href={'/admin/complaints'} className="text-sm">Complaints</Link>
+        <Link href={'/admin/editor'} className="text-sm">Publish</Link>
+      </div>
+
       {/* Header Section */}
       <div className="flex w-full flex-col gap-14 lg:gap-0 items-center justify-between lg:flex-row lg:justify-between py-6 lg:py-10 relative">
         <Link href="/admin/articles" className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin" >ADMIN</Link>
@@ -164,7 +171,6 @@ const HeaderAdmin: React.FC = () => {
               )}
             </li>
           )}
-          <Link href={'/admin/editor'} className="px-4 py-2 border-l hidden lg:block">Publish</Link>
         </ul>
       </div>
 
