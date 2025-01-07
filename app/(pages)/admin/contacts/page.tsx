@@ -1,5 +1,6 @@
 import getContactsAction from "@/app/Actions/get-contacts/getComplaints";
 import { ContactForm } from "@/app/models/contact-model";
+import { ContactCard } from "@/app/components/admin/contactCard";
 
 const Articles = async () => {
   const response: string = await getContactsAction()
@@ -13,12 +14,12 @@ const Articles = async () => {
         <div className="h-[1.5px] lg:h-[2px] bg-[#c7c7c7] lg:bg-[#1A1A1A] flex-1"></div>
       </div>
       {contacts.map((contact: ContactForm, index: number) => (
-        // <ArticleCard key={index} article={article} />
-        <p key={index}>{contact.name}</p> // need to add a component: SHUBHAM-TODO => create a Card component in components<admin
+        <ContactCard key={index} contact={contact}/>
+        // <p key={index}>{contact.name}</p> // need to add a component: SHUBHAM-TODO => create a Card component in components<admin
       ))}
       <p className="text-xs text-gray-500 my-3 text-center">Protected for Admins only.</p>
     </div>
   )
 }
 
-export default Articles
+export default Articles;
