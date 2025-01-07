@@ -3,6 +3,7 @@ export interface Article {
   primary_tag: string;
   secondary_tags: string[];
   title: string;
+  description: string;
   image: string | null;
   upvotes: number;
   downvotes: number;
@@ -13,6 +14,7 @@ export interface ArticleFormData {
   primary_tag: string;
   secondary_tags: string[];
   title: string;
+  description: string;
   image: string | null;
   content: string;
 }

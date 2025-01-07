@@ -5,7 +5,7 @@ import Link from "next/link";
 export const TopCard = ({ article }: { article: Article }) => {
   const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article.image || defaultImage;
-  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 180) + "..." : article.content;
+  const truncatedContent = article.description.length > 30 ? article.description.substring(0, 180) + "..." : article.description;
 
   return (
     <Link href={`/article/${article._id}`} className="flex relative h-full">

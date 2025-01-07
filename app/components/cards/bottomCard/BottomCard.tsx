@@ -5,7 +5,6 @@ import { Article } from "@/app/types/article";
 export const BottomCard = ({ article }: { article: Article }) => {
   const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article.image || defaultImage;
-  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 80) + "..." : article.content;
 
   return (
     <Link href={`/article/${article._id}`}>
@@ -25,7 +24,7 @@ export const BottomCard = ({ article }: { article: Article }) => {
           <div className="h-[2px] w-[90%] bg-[#dbdbdb] my-1"></div>
 
           <h3 className="text-gray-500 text-xs">{article.primary_tag}</h3>
-          <p className="text-[#04594D] text-sm">{truncatedContent}</p>
+          <p className="text-[#04594D] text-sm">{article.description}</p>
         </div>
       </div>
     </Link>

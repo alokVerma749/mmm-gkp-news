@@ -31,12 +31,13 @@ export const publishArticle = async (data: ArticleFormData) => {
     const headerStore = headers();
     const permission = (await headerStore).get('x-admin-permission');
 
-    if (!permission || permission == PermissionLevel.PUBLISH) {
+    if (permission === null || !Object.values(PermissionLevel).includes(permission as PermissionLevel)) {
       throw new Error("Unauthorized: Insufficient permissions.");
     }
-
+    console.log(data, '###')
     const article = new Article(data);
     await article.save();
+    console.log(article, '$$$')
     return article;
   } catch (error) {
     console.error("Error publishing article:", error);

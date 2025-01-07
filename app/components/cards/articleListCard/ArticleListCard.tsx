@@ -8,9 +8,6 @@ export const ArticleListCard = ({ article }: { article: Article }) => {
   const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article.image || defaultImage;
 
-  // Dynamic truncation based on screen size
-  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 150) + '...' : article.content;
-
   return (
     <Link href={`/article/${article._id}`}>
       <div className="h-full w-full flex sm:text-left md:p-4 relative min-h-28">
@@ -32,7 +29,7 @@ export const ArticleListCard = ({ article }: { article: Article }) => {
               {article.primary_tag}
             </h3>
             <p className="lg:mb-4 text-[#04594D] text-xs lg:text-base">
-              {truncatedContent}
+              {article?.description}
             </p>
             <span className="inline-flex">
               <div className="text-gray-500 flex flex-row justify-center items-center">

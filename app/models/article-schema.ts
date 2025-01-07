@@ -4,6 +4,7 @@ export interface Article extends Document {
   primary_tag: string;
   secondary_tags: string[];
   title: string;
+  description: string;
   upvotes: number;
   downvotes: number;
   content: string;
@@ -31,6 +32,11 @@ const articleSchema: Schema = new mongoose.Schema({
     default: [],
   },
   title: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  description: {
     type: String,
     required: true,
     trim: true,

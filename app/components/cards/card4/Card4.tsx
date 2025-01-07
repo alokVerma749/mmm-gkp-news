@@ -5,7 +5,7 @@ import { Article } from "@/app/types/article";
 export const Card4 = ({ article }: { article: Article }) => {
   const defaultImage = "https://res.cloudinary.com/dv1fxqrsi/image/upload/v1735705725/article-thumbnails/b4lxfvb1qgkefdbybuor.jpg";
   const imageSrc = article.image || defaultImage;
-  const truncatedContent = article.content.length > 30 ? article.content.substring(0, 200) + "..." : article.content;
+  const truncatedContent = article.description.length > 30 ? article.description.substring(0, 200) + "..." : article.description;
 
   return (
     <Link href={`/article/${article._id}`}>

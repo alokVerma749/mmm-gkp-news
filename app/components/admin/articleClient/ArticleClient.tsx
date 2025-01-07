@@ -13,6 +13,7 @@ import deleteArticleAction from '@/app/Actions/delete-article-action/deleteArtic
 interface FormData {
   _id: string;
   title: string;
+  description: string;
   image: string | null;
   content: string;
   primary_tag: string;

@@ -69,7 +69,7 @@ export default async function Article({ params }: ArticleProps) {
         <div className=" mt-4">
           <h1 className="text-xl font-semibold my-2 mb-4">{article.title}</h1>
           <div className="h-[1.8] w-[80%] bg-[#c7c7c7] my-2 lg:my-4"></div>
-          <div className="markdown-content">
+          <div className="markdown-content prose prose-lg prose-slate max-w-full">
             <Markdown>{article.content}</Markdown>
           </div>
 

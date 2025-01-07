@@ -10,6 +10,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 interface FormData {
   title: string;
+  description: string;
   image: string | null;
   content: string;
   primary_tag: string;
@@ -21,6 +22,7 @@ const Editor: React.FC = () => {
   const { register, handleSubmit, control, setValue } = useForm<FormData>({
     defaultValues: {
       title: '',
+      description: '',
       image: null,
       content: '',
       primary_tag: '',
@@ -42,6 +44,7 @@ const Editor: React.FC = () => {
 
         //empty the form
         setValue('title', '');
+        setValue('description', '');
         setValue('image', null);
         setValue('content', '');
         setValue('primary_tag', '');
@@ -99,6 +102,16 @@ const Editor: React.FC = () => {
           />
         </div>
 
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-600">Description</label>
+          <input
+            {...register('description', { required: 'Description is required' })}
+            type="text"
+            className="w-full px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+        </div>
+
         {/* Image */}
         <div>
           <label className="block text-sm font-medium mb-1 text-gray-600">Upload Image</label>
@@ -111,7 +124,6 @@ const Editor: React.FC = () => {
               Upload Image
             </div>
           </CldUploadButton>
-
 
           {imagePreview && (
             <div className="mt-4">
