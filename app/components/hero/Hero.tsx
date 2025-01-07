@@ -8,12 +8,12 @@ export const Hero = ({ articles }: { articles: Article[] }) => {
   return (
     <div className="w-3/4 mx-auto h-0 md:h-[50dvh] lg:flex flex-row bg-[#FDFDFD] relative z-10 overflow-hidden">
       <div className="grid grid-rows-[75%_25%] w-1/2 p-6">
-        <TopCard article={articles[6]} />
-        <Card5 article={articles[1]} />
+        <TopCard article={articles[6] || articles[0]} />
+        <Card5 article={articles[1] || articles[0]} />
       </div>
       <div className="grid grid-rows-[60%_40%] w-1/2">
-        <Card4 article={articles[4]} />
-        <BottomCard article={articles[9]} />
+        <Card4 article={articles[4] || articles[0]} />
+        <BottomCard article={articles[9] || articles[0]} />
       </div>
     </div>
   );

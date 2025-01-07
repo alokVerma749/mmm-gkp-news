@@ -33,7 +33,11 @@ export default async function Home() {
   const trendingArticles: Article[] = trendingResponse ? JSON.parse(trendingResponse as string) : [];
 
   if (initialArticles.length === 0) {
-    return <p>No articles found</p>;
+    return (
+      <div className="w-full text-center">
+        <p className="text-xl p-2">No articles found</p>
+      </div>
+    )
   }
 
   return (
