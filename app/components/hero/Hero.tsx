@@ -12,8 +12,8 @@ export const Hero = ({ articles }: { articles: Article[] }) => {
         <Card5 article={articles[1]} />
       </div>
       <div className="grid grid-rows-[60%_40%] w-1/2">
-        <Card4 article={articles[1]} />
-        <BottomCard article={articles[1]} />
+        <Card4 article={articles[4]} />
+        <BottomCard article={articles[9]} />
       </div>
     </div>
   );
