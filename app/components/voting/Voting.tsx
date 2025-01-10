@@ -37,7 +37,7 @@ const Voting: React.FC<VotingProps> = ({ article_id }) => {
     if (res.success) {
       toast({
         title: "Article Downvoted",
-        description: "We regret that you didn't like this article. Your feedback matters! If you would like to share why, please [click here](#) to provide feedback (Article ID: {article_id}).",
+        description: "Your feedback has been noted. The article's score will be updated shortly.",
       });
     }
   }
