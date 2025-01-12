@@ -9,7 +9,7 @@ export const SurveyCard = ({ suggestion }: { suggestion: ISuggestion }) => {
         <h3 className="text-gray-700 text-xs lg:text-base mb-1">Name: {suggestion.name}</h3>
         <h3 className="text-gray-700 text-xs lg:text-base mb-1">Email: {suggestion.email}</h3>
         <h3 className="text-gray-700 text-xs lg:text-base mb-1">Category: {suggestion.category}</h3>
-        <p className="lg:mb-4 text-[#04594D] text-xs lg:text-lg leading-relaxed truncate">{suggestion.description}</p>
+        <p className="lg:mb-4 text-[#04594D] text-xs lg:text-lg leading-relaxed">{suggestion.description}</p>
 
         {/* Display articleLinks if they exist */}
         {suggestion.relatedLinks && suggestion.relatedLinks.length > 0 && (
