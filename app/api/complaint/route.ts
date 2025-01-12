@@ -1,5 +1,6 @@
 import connect_db from "@/app/config/db";
 import Complaint from "@/app/models/complaint-schema";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: Request) {
   try {
@@ -23,6 +24,8 @@ export async function POST(request: Request) {
     });
 
     await newComplaint.save();
+
+    revalidatePath('/admin/surveys');
 
     return new Response(
       JSON.stringify({ message: "Complaint successfully submitted" }),
