@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from "next";
 import { Antic } from "next/font/google";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           {children}
           <Toaster />
           <Analytics />
+          <GoogleTagManager gtmId={process.env.GID || 'G-1GNF1XZNX3'} />
         </div>
         <div className="h-auto bg-[#1A1A1A] lg:h-[25dvh] lg:bg-foreground">
           <Footer />
