@@ -55,8 +55,8 @@ export default async function Article({ params }: ArticleProps) {
               alt={`${article.title} thumbnail`}
               className="flex-shrink-0 w-full h-96 object-cover object-center"
               src={imageSrc}
-              width={200}
-              height={200}
+              width={2000}
+              height={2000}
             />
           </div>
         </div>
