@@ -6,6 +6,7 @@ import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import ChatButton from "./components/chat/Chat-button";
 
 const anticFont = Antic({
   weight: "400",
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <Analytics />
           <GoogleTagManager gtmId={process.env.GID || 'G-1GNF1XZNX3'} />
         </div>
+        <ChatButton />
         <div className="h-auto bg-[#1A1A1A] lg:h-[25dvh] lg:bg-foreground">
           <Footer />
         </div>
