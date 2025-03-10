@@ -84,7 +84,7 @@ export default function Chat() {
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-full overflow-hidden">
-            <img src="/placeholder.svg?height=32&width=32" alt="Assistant" className="h-full w-full object-cover" />
+            <Bot size={32} />
           </div>
           <h3 className="font-medium">Assistant</h3>
         </div>
