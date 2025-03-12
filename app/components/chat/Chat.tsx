@@ -57,19 +57,33 @@ export default function Chat() {
     setInput("")
     setIsLoading(true)
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch(`/api/chat?query=${encodeURIComponent(input)}`)
+      if (!response.ok) throw new Error("Failed to fetch response")
+
+      const data = await response.json()
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content:
-          "Thank you for your message! This is a simulated response. In a real application, this would be connected to an AI service.",
+        content: data?.answer?.kwargs?.content || "Sorry, I couldn't understand that.",
         role: "assistant",
         timestamp: new Date(),
       }
 
       setMessages((prev) => [...prev, assistantMessage])
+    } catch (error) {
+      console.error("Error fetching chat response:", error)
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          content: "An error occurred. Please try again later.",
+          role: "assistant",
+          timestamp: new Date(),
+        },
+      ])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
