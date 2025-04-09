@@ -53,7 +53,7 @@ export default async function Article({ params }: ArticleProps) {
           <div className="lg:w-3/4 lg:mx-auto border rounded-lg overflow-hidden border-gray-800 lg:rounded-none lg:rounded-b-xl shadow-lg shadow-slate-700 custom-height-1 custom-height-2 custom-height-3">
             <Image
               alt={`${article.title} thumbnail`}
-              className="flex-shrink-0 w-full h-96 object-cover object-center"
+              className="flex-shrink-0 w-full h-96 object-fill"
               src={imageSrc}
               width={2000}
               height={2000}
