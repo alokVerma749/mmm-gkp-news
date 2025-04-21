@@ -30,13 +30,13 @@ export async function POST(request: Request) {
       );
     }
 
-    // OTP verification
-    if (!otp || admin.otp != otp) {
-      return new Response(
-        JSON.stringify({ message: "Invalid credentials" }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
-      );
-    }
+    // OTP verification - TODO => uncomment this
+    // if (!otp || admin.otp != otp) {
+    //   return new Response(
+    //     JSON.stringify({ message: "Invalid credentials" }),
+    //     { status: 401, headers: { "Content-Type": "application/json" } }
+    //   );
+    // }
 
     // Generate JWT token
 
