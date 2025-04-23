@@ -218,16 +218,20 @@ function ChatMessage({ message, relatedLinks }: ChatMessageProps) {
         )}
       >
         <p className="whitespace-pre-wrap break-words">{message.content}</p>
-        <ul className="list-disc pl-5 space-y-1 text-sm text-blue-600">
-          {relatedLinks.map((link, index) => (
-            <li key={index}>
-              <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                {link}
-              </a>
-            </li>
-          ))}
-        </ul>
-
+        {!isUser && relatedLinks.length > 0 && (
+          <div className="mt-2 border-t pt-2 border-gray-300">
+            <h4 className="text-sm font-semibold mb-1">Related Links</h4>
+            <ul className="list-disc pl-5 space-y-1 text-sm text-blue-600">
+              {relatedLinks.map((link, index) => (
+                <li key={index}>
+                  <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className={classNames("text-xs mt-1", isUser ? "text-white/70" : "text-gray-500")}>{time}</div>
       </div>
 
