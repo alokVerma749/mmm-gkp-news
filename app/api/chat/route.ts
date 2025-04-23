@@ -3,6 +3,7 @@ import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from "@langchain
 import { MongoClient } from "mongodb";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import connect_db from "@/app/config/db";
+import removeMarkdown from "remove-markdown"; // Install this package: npm install remove-markdown
 
 // ✅ Load Environment Variables
 const MONGO_URI: string = process.env.DB_URI || "";
@@ -74,7 +75,15 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const vectorDB = await loadAndStoreData();
     const relatedDocs = await vectorDB.similaritySearch(query, 3);
 
-    const context = relatedDocs.map((doc) => doc.pageContent).join("\n");
+    // Process related documents
+    const context = relatedDocs
+      .map((doc) => {
+        const cleanContent = removeMarkdown(doc.pageContent); // Remove Markdown syntax
+        const articleLink = `${process.env.NEXT_PUBLIC_SITE_URL}/article/${doc.metadata.id || doc.metadata._id}`; // Generate article link
+        return `${cleanContent}<br/><br/>Read more: <a href="${articleLink}" target="_blank" rel="noopener noreferrer">${articleLink}</a>`;
+      })
+      
+      .join("\n\n");
 
     const prompt = `Context: ${context}\n\nUser: ${query}\nAI: `;
     const response = await model.invoke(prompt);
