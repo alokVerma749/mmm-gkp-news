@@ -76,19 +76,28 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const relatedDocs = await vectorDB.similaritySearch(query, 3);
 
     // Process related documents
-    const context = relatedDocs
-      .map((doc) => {
-        const cleanContent = removeMarkdown(doc.pageContent); // Remove Markdown syntax
-        const articleLink = `${process.env.NEXT_PUBLIC_SITE_URL}/article/${doc.metadata.id || doc.metadata._id}`; // Generate article link
-        return `${cleanContent}<br/><br/>Read more: <a href="${articleLink}" target="_blank" rel="noopener noreferrer">${articleLink}</a>`;
-      })
-      
-      .join("\n\n");
+    const articles = relatedDocs.map((doc) => {
+      const cleanContent = removeMarkdown(doc.pageContent);
+      const articleLink = `${process.env.NEXT_PUBLIC_SITE_URL}/article/${doc.metadata.id || doc.metadata._id}`;
+      return {
+        content: cleanContent,
+        link: articleLink
+      };
+    });
+    const context = articles.map((article) => `${article.content}`).join("\n\n");
+    const relatedLinks = articles?.map((article) => article?.link) || [];
 
     const prompt = `Context: ${context}\n\nUser: ${query}\nAI: `;
     const response = await model.invoke(prompt);
 
-    return NextResponse.json({ answer: response }, { status: 200 });
+    // 👉 Now returning both 'answer' and 'articles'
+    return NextResponse.json(
+      {
+        answer: response,
+        articles: relatedLinks, // Include articles separately
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("API Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

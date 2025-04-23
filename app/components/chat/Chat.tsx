@@ -25,6 +25,7 @@ export default function Chat() {
       timestamp: new Date(),
     },
   ])
+  const [relatedLinks, setRelatedLinks] = useState(['']);
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -70,6 +71,7 @@ export default function Chat() {
       }
 
       setMessages((prev) => [...prev, assistantMessage])
+      setRelatedLinks(data?.articles || []);
     } catch (error) {
       console.error("Error fetching chat response:", error)
       setMessages((prev) => [
@@ -128,7 +130,7 @@ export default function Chat() {
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
+          <ChatMessage key={message.id} message={message} relatedLinks={relatedLinks} />
         ))}
         <div ref={messagesEndRef} />
       </div>
@@ -193,10 +195,11 @@ export default function Chat() {
 }
 
 interface ChatMessageProps {
-  message: Message
+  message: Message,
+  relatedLinks: string[]
 }
 
-function ChatMessage({ message }: ChatMessageProps) {
+function ChatMessage({ message, relatedLinks }: ChatMessageProps) {
   const isUser = message.role === "user"
   const time = message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
 
@@ -215,6 +218,16 @@ function ChatMessage({ message }: ChatMessageProps) {
         )}
       >
         <p className="whitespace-pre-wrap break-words">{message.content}</p>
+        <ul className="list-disc pl-5 space-y-1 text-sm text-blue-600">
+          {relatedLinks.map((link, index) => (
+            <li key={index}>
+              <a href={link} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                {link}
+              </a>
+            </li>
+          ))}
+        </ul>
+
         <div className={classNames("text-xs mt-1", isUser ? "text-white/70" : "text-gray-500")}>{time}</div>
       </div>
 
