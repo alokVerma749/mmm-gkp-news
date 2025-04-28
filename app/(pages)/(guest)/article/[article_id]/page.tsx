@@ -126,7 +126,7 @@ export default async function Article({ params }: ArticleProps) {
               <div className="flex items-center">
                 <Eye className="w-4 h-4 mr-1" />
               </div>
-              <div className="sm:hidden lg:flex items-center">
+              <div className="hidden lg:flex items-center">
                 <Voting article_id={article_id} />
               </div>
             </div>
@@ -139,7 +139,6 @@ export default async function Article({ params }: ArticleProps) {
         <div className="mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
           {/* Article Content */}
           <div className="flex">
-            {/* Sidebar with voting */}
             <div className="hidden sm:block w-16 border-r border-gray-100 dark:border-gray-700 p-4">
               <div className="sticky top-8 flex flex-col items-center space-y-6">
 

@@ -1,10 +1,12 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useEffect } from "react"
+import { useState, useEffect, type ChangeEvent } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction"
+import { getCurrentWeather } from "@/app/services/external/weather"
+import { Loader } from "../spinner"
 import {
   Search,
   Menu,
@@ -20,39 +22,39 @@ import {
   Briefcase,
   School,
   Award,
+  Thermometer,
 } from "lucide-react"
 
-const tags: string[] = [
-  "Department",
-  "Hostel",
-  "Library",
-  "Events",
-  "Placements",
-  "College Life",
-  "Alumni",
-  "Admissions",
-  "Scholarships",
-]
+// Custom hook for debounce
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
-// Map icons to categories
-const categoryIcons: Record<string, React.ReactNode> = {
-  Department: <Building2 className="w-4 h-4 mr-2" />,
-  Hostel: <Home className="w-4 h-4 mr-2" />,
-  Library: <BookOpen className="w-4 h-4 mr-2" />,
-  Events: <CalendarDays className="w-4 h-4 mr-2" />,
-  Placements: <Briefcase className="w-4 h-4 mr-2" />,
-  "College Life": <Users className="w-4 h-4 mr-2" />,
-  Alumni: <School className="w-4 h-4 mr-2" />,
-  Admissions: <GraduationCap className="w-4 h-4 mr-2" />,
-  Scholarships: <Award className="w-4 h-4 mr-2" />,
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  return debouncedValue
 }
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
+  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([])
   const [isScrolled, setIsScrolled] = useState(false)
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null)
+  const [weatherLoading, setWeatherLoading] = useState<boolean>(true)
+  const [weatherError, setWeatherError] = useState<string | null>(null)
   const pathname = usePathname()
+
+  // Use debounced search term
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
 
   // Handle scroll effect
   useEffect(() => {
@@ -70,12 +72,85 @@ export default function Header() {
     setIsSearchOpen(false)
   }, [pathname])
 
+  // Fetch article suggestions
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!debouncedSearchTerm) {
+        setSuggestions([])
+        return
+      }
+
+      try {
+        const response = JSON.parse(await getArticlesSuggestionsAction({ search: debouncedSearchTerm }))
+
+        // Check if the response is valid
+        if (!response) {
+          console.error("Invalid response")
+          return
+        }
+
+        setSuggestions(response)
+      } catch (error) {
+        console.error("Error fetching suggestions:", error)
+        setSuggestions([])
+      }
+    }
+
+    fetchSuggestions()
+  }, [debouncedSearchTerm])
+
+  // Fetch weather data
+  useEffect(() => {
+    const fetchWeather = async () => {
+      setWeatherLoading(true)
+      try {
+        const temperature = await getCurrentWeather()
+        setCurrentTemperature(temperature)
+      } catch (err) {
+        setWeatherError("Error fetching weather data")
+        console.error("Error fetching weather data:", err)
+      } finally {
+        setWeatherLoading(false)
+      }
+    }
+
+    fetchWeather()
+  }, [])
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+  }
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     // Implement search functionality here
-    console.log("Searching for:", searchQuery)
+    console.log("Searching for:", searchTerm)
     // You could redirect to search results page
-    // router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
+    // router.push(`/search?q=${encodeURIComponent(searchTerm)}`)
+  }
+
+  const tags: string[] = [
+    "Department",
+    "Hostel",
+    "Library",
+    "Events",
+    "Placements",
+    "College Life",
+    "Alumni",
+    "Admissions",
+    "Scholarships",
+  ]
+
+  const categoryIcons: { [key: string]: React.ReactNode } = {
+    Department: <Building2 className="w-4 h-4 mr-2" />,
+    Hostel: <Home className="w-4 h-4 mr-2" />,
+    Library: <BookOpen className="w-4 h-4 mr-2" />,
+    Events: <CalendarDays className="w-4 h-4 mr-2" />,
+    Placements: <Briefcase className="w-4 h-4 mr-2" />,
+    "College Life": <GraduationCap className="w-4 h-4 mr-2" />,
+    Alumni: <Users className="w-4 h-4 mr-2" />,
+    Admissions: <School className="w-4 h-4 mr-2" />,
+    Scholarships: <Award className="w-4 h-4 mr-2" />,
   }
 
   return (
@@ -153,6 +228,22 @@ export default function Header() {
             >
               About
             </Link>
+
+            {/* Weather Display */}
+            {typeof currentTemperature === "number" && (
+              <div className="px-3 py-2 flex items-center text-sm text-gray-700 dark:text-gray-300">
+                {weatherLoading ? (
+                  <Loader variant="small" />
+                ) : weatherError ? (
+                  "Error"
+                ) : (
+                  <div className="flex items-center">
+                    <Thermometer className="w-4 h-4 mr-1 text-blue-500" />
+                    <span>{currentTemperature.toFixed(1)}°C</span>
+                  </div>
+                )}
+              </div>
+            )}
           </nav>
 
           {/* Desktop Search */}
@@ -161,11 +252,29 @@ export default function Header() {
               <input
                 type="text"
                 placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchTerm}
+                onChange={handleInputChange}
                 className="w-64 pl-10 pr-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
               />
               <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+
+              {/* Suggestions Dropdown */}
+              {suggestions.length > 0 && (
+                <div className="absolute left-0 right-0 mt-1 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 max-h-60 overflow-y-auto z-50">
+                  <ul>
+                    {suggestions.map(({ _id, title }) => (
+                      <li key={_id} className="border-b border-gray-100 dark:border-gray-700 last:border-0">
+                        <Link
+                          href={`/article/${_id}`}
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </form>
           </div>
 
@@ -198,12 +307,30 @@ export default function Header() {
               <input
                 type="text"
                 placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchTerm}
+                onChange={handleInputChange}
                 className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
                 autoFocus
               />
               <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+
+              {/* Mobile Suggestions Dropdown */}
+              {suggestions.length > 0 && (
+                <div className="absolute left-0 right-0 mt-1 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 max-h-60 overflow-y-auto z-50">
+                  <ul>
+                    {suggestions.map(({ _id, title }) => (
+                      <li key={_id} className="border-b border-gray-100 dark:border-gray-700 last:border-0">
+                        <Link
+                          href={`/article/${_id}`}
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </form>
           </div>
         )}
@@ -260,6 +387,22 @@ export default function Header() {
             >
               About
             </Link>
+
+            {/* Weather in mobile menu */}
+            {typeof currentTemperature === "number" && (
+              <div className="px-3 py-2 flex items-center text-sm text-gray-700 dark:text-gray-300">
+                {weatherLoading ? (
+                  <Loader variant="small" />
+                ) : weatherError ? (
+                  "Error loading weather"
+                ) : (
+                  <div className="flex items-center">
+                    <Thermometer className="w-4 h-4 mr-1 text-blue-500" />
+                    <span>{currentTemperature.toFixed(1)}°C</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
