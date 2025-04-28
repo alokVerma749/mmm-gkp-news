@@ -7,6 +7,7 @@ import { CampusUpdatesInfiniteScroll } from "./components/campusUpdatesInfiniteS
 import { CampusUpdates } from "./components/campusUpdates";
 import { Carousel } from "./components/carousel";
 import getTrendingArticlesAction from "./Actions/trending-articles/getTrendingArticles";
+import Header from "./components/header/Header";
 
 export const metadata: Metadata = {
   title: "Timeline-MMMUT GKP NEWS",
@@ -44,6 +45,9 @@ export default async function Home() {
     <main className="w-full">
       <div className="lg:hidden w-full h-[30dvh] overflow-hidden">
         <Carousel articles={trendingArticles} />
+      </div>
+      <div className="bg-[#1A1A1A] lg:bg-foreground">
+        <Header />
       </div>
       <div className="hidden lg:block h-0 w-full md:h-[50dvh] mx-auto mb-6 relative">
         <div className="w-full h-[60%] bg-[#020809] absolute top-0"></div>

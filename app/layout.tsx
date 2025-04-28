@@ -3,11 +3,11 @@ import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from "next";
 import { Antic } from "next/font/google";
 import "./globals.css";
-import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import ChatButton from "./components/chat/Chat-button";
 import { ThemeProvider } from "./context/ThemeContext";
+import Header from "./components/newHeader/Header";
 
 const anticFont = Antic({
   weight: "400",
@@ -25,9 +25,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang="en">
       <ThemeProvider>
         <body className={`${anticFont.variable} antialiased relative`}>
-          <div className="bg-[#1A1A1A] lg:bg-foreground">
-            <Header />
-          </div>
+          <Header />
           <div className="min-h-[80vh] w-full bg-[#F3F2EA] lg:pb-6">
             {children}
             <Toaster />

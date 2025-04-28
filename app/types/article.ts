@@ -8,6 +8,7 @@ export interface Article {
   upvotes: number;
   downvotes: number;
   content: string;
+  createdAt?: Date;
 }
 export interface ArticleFormData {
   _id?: string;

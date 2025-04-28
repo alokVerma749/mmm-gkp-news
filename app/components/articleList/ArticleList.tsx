@@ -8,7 +8,7 @@ type ArticleListProps = {
 
 export const ArticleList = ({ articles, article_tag }: ArticleListProps) => {
   return (
-    <div className="flex flex-col lg:gap-0 bg-[#FDFDFD] lg:w-3/4 mx-auto shadow-md lg:py-0 overflow-hidden">
+    <div className="flex flex-col lg:gap-0 bg-[#FDFDFD] mx-auto shadow-md lg:py-0 overflow-hidden">
       <div className="flex items-center gap-4 py-4 pl-2 pr-0 lg:p-4">
         <h1 className="text-xl lg:text-4xl font-semibold capitalize">
           {article_tag}
