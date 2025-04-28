@@ -1,33 +1,108 @@
-import { Article } from "@/app/types/article";
-import { Card2 } from "../cards/card2";
+import { Article } from "@/app/types/article"
+import { formatDate } from "@/app/utils/form-date"
+import Image from "next/image"
+import Link from "next/link"
 
-export const CampusUpdates = ({ articles }: { articles: Article[] }) => {
-  // Split the articles array into two parts
-  const firstHalf = articles.slice(0, Math.ceil(articles.length / 2));
-  const secondHalf = articles.slice(Math.ceil(articles.length / 2));
+
+interface CampusUpdatesProps {
+  articles: Article[]
+}
+
+export function CampusUpdates({ articles }: CampusUpdatesProps) {
+  if (!articles.length) return null
+
+  // Feature the first article
+  const featuredArticle = articles[0]
+  const remainingArticles = articles.slice(1)
 
   return (
-    <div className="order-last lg:order-first">
-      <div className="flex gap-6 justify-between items-center my-4 pl-2 lg:pl-0">
-        <h1 className="text-xl font-semibold lg:text-3xl">Campus Updates</h1>
-        <div className="h-[1.5px] lg:h-[2px] bg-[#c7c7c7] lg:bg-[#1A1A1A] flex-1"></div>
+    <div className="divide-y divide-gray-200">
+      {/* Featured Article */}
+      <article className="p-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {featuredArticle.image && (
+            <div className="aspect-video relative overflow-hidden">
+              <Image
+                src={featuredArticle.image || "/placeholder.svg"}
+                alt={featuredArticle.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 500px"
+              />
+            </div>
+          )}
+
+          <div>
+            <h3 className="text-2xl font-bold font-serif leading-tight mb-3">
+              <Link href={`/article/${featuredArticle._id}`} className="hover:text-blue-600 transition-colors">
+                {featuredArticle.title}
+              </Link>
+            </h3>
+
+            <p className="text-gray-600 mb-4 line-clamp-3">
+              {featuredArticle.title}
+            </p>
+
+            <div className="flex items-center justify-between text-sm text-gray-500">
+              <span className="font-medium">{"MMMUT Staff"}</span>
+              <span>{formatDate(featuredArticle.createdAt?.toString() || "")}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {/* Remaining Articles */}
+      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+        {remainingArticles.slice(0, 2).map((article) => (
+          <article key={article._id} className="p-6">
+            <h3 className="text-lg font-bold leading-tight mb-2">
+              <Link href={`/article/${article._id}`} className="hover:text-blue-600 transition-colors">
+                {article.title}
+              </Link>
+            </h3>
+
+            {article.image && (
+              <div className="aspect-video relative mb-3 overflow-hidden">
+                <Image
+                  src={article.image || "/placeholder.svg"}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 300px"
+                />
+              </div>
+            )}
+
+            <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+              {article.title}
+            </p>
+
+            <div className="flex items-center justify-between text-xs text-gray-500">
+              <span>{"MMMUT Staff"}</span>
+              <span>{formatDate(article.createdAt?.toString() || "")}</span>
+            </div>
+          </article>
+        ))}
       </div>
 
-      <div className="flex flex-col lg:flex-row lg:gap-4 w-full">
-        {/* First section with the first half of articles */}
-        <div className="flex flex-col lg:w-1/2">
-          {firstHalf.map((article, index) => (
-            <Card2 key={index} article={article} />
-          ))}
-        </div>
+      {/* More Articles in Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+        {remainingArticles.slice(2, 5).map((article) => (
+          <article key={article._id} className="p-4">
+            <h3 className="text-base font-medium leading-tight mb-2">
+              <Link href={`/article/${article._id}`} className="hover:text-blue-600 transition-colors">
+                {article.title}
+              </Link>
+            </h3>
 
-        {/* Second section with the second half of articles */}
-        <div className="flex flex-col lg:w-1/2">
-          {secondHalf.map((article, index) => (
-            <Card2 key={index} article={article} />
-          ))}
-        </div>
+            <p className="text-gray-600 text-xs mb-2 line-clamp-2">
+              {article.title}
+            </p>
+
+            <div className="text-xs text-gray-500">{formatDate(article.createdAt?.toString() || "")}</div>
+          </article>
+        ))}
       </div>
     </div>
-  );
-};
+  )
+}

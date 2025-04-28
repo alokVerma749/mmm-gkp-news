@@ -97,7 +97,7 @@ export const CampusUpdatesInfiniteScroll = ({ initialArticles, articleTag }: Cam
           ))}
         </div>
       </div>
-      {loading && <div className="text-center mt-6"><Loader style="mx-auto" color="green" /></div>}
+      {loading && <div className="text-center mt-6"><Loader variant="small" /></div>}
       {!hasMore && <p className="text-center mt-4">No more articles available.</p>}
     </div>
   );

@@ -78,7 +78,7 @@ export const InfiniteScrollList = ({ initialArticles, article_tag, initialPage }
       {articles.map((article, index) => (
         <ArticleListCard key={index} article={article} />
       ))}
-      {loading && <div className="text-center text-lg my-4"><Loader style="mx-auto" variant="small" color="green" /></div>}
+      {loading && <div className="text-center text-lg my-4"><Loader variant="small" /></div>}
       {!hasMore && <p className="text-center text-lg my-4">No more articles available.</p>}
     </div>
   );
