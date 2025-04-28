@@ -7,6 +7,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import ChatButton from "./components/chat/Chat-button";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const anticFont = Antic({
   weight: "400",
@@ -22,21 +23,23 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${anticFont.variable} antialiased relative`}>
-        <div className="bg-[#1A1A1A] lg:bg-foreground">
-          <Header />
-        </div>
-        <div className="min-h-[80vh] w-full bg-[#F3F2EA] lg:pb-6">
-          {children}
-          <Toaster />
-          <Analytics />
-          <GoogleTagManager gtmId={process.env.GID || 'G-1GNF1XZNX3'} />
-        </div>
-        <ChatButton />
-        <div className="h-auto bg-[#1A1A1A] lg:h-[25dvh] lg:bg-foreground">
-          <Footer />
-        </div>
-      </body>
+      <ThemeProvider>
+        <body className={`${anticFont.variable} antialiased relative`}>
+          <div className="bg-[#1A1A1A] lg:bg-foreground">
+            <Header />
+          </div>
+          <div className="min-h-[80vh] w-full bg-[#F3F2EA] lg:pb-6">
+            {children}
+            <Toaster />
+            <Analytics />
+            <GoogleTagManager gtmId={process.env.GID || 'G-1GNF1XZNX3'} />
+          </div>
+          <ChatButton />
+          <div className="h-auto bg-[#1A1A1A] lg:h-[25dvh] lg:bg-foreground">
+            <Footer />
+          </div>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
