@@ -1,234 +1,324 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState, useEffect, ChangeEvent } from "react";
-import { getCurrentWeather } from "@/app/services/external/weather";
-import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction";
-import { Loader } from "../spinner";
+import { useState, useEffect, useRef, type ChangeEvent } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Search, Menu, X, Bell, User, Settings, LogOut, ChevronDown, Sun, Moon, Thermometer } from 'lucide-react'
+import { getCurrentWeather } from "@/app/services/external/weather"
+import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction"
+import { Loader } from "../spinner"
 
 // Custom hook for debounce
 function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+      setDebouncedValue(value)
+    }, delay)
 
     return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+      clearTimeout(handler)
+    }
+  }, [value, delay])
 
-  return debouncedValue;
+  return debouncedValue
 }
 
-const HeaderAdmin: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([]);
-  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null);
-  const [weatherLoading, setWeatherLoading] = useState<boolean>(true);
-  const [weatherError, setWeatherError] = useState<string | null>(null);
-  const [sidebar, setSidebar] = useState(false);
+export default function HeaderAdmin() {
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [suggestions, setSuggestions] = useState<{ _id: string; title: string }[]>([])
+  const [currentTemperature, setCurrentTemperature] = useState<number | null>(null)
+  const [weatherLoading, setWeatherLoading] = useState<boolean>(true)
+  const [weatherError, setWeatherError] = useState<string | null>(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  
+  const pathname = usePathname()
+  const debouncedSearchTerm = useDebounce(searchTerm, 300)
+  const userMenuRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLDivElement>(null)
 
-  const tags: string[] = [
-    "Department",
-    "Hostel",
-    "Library",
-    "Events",
-    "Placements",
-    "College Life",
-    "Alumni",
-    "Admissions",
-    "Scholarships",
-  ];
-
-  const activePath = usePathname();
-  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  // Navigation items
+  const navItems = [
+    { name: "Dashboard", path: "/admin", icon: "dashboard" },
+    { name: "Articles", path: "/admin/articles", icon: "articles" },
+    { name: "Editor", path: "/admin/editor", icon: "editor" },
+    { name: "Complaints", path: "/admin/complaints", icon: "complaints" },
+    { name: "Contacts", path: "/admin/contacts", icon: "contacts" },
+    { name: "Surveys", path: "/admin/surveys", icon: "surveys" },
+  ]
 
   // Fetch article suggestions
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (!debouncedSearchTerm) {
-        setSuggestions([]);
-        return;
+        setSuggestions([])
+        return
       }
 
       try {
         const response = JSON.parse(
           await getArticlesSuggestionsAction({ search: debouncedSearchTerm })
-        );
+        )
 
-        // Check if the response is valid JSON
         if (!response) {
-          console.error("Invalid response");
-          return;
+          console.error("Invalid response")
+          return
         }
 
-        setSuggestions(response);
+        setSuggestions(response)
       } catch (error) {
-        console.error("Error fetching suggestions:", error);
-        setSuggestions([]);
+        console.error("Error fetching suggestions:", error)
+        setSuggestions([])
       }
-    };
+    }
 
-    fetchSuggestions();
-  }, [debouncedSearchTerm]);
+    fetchSuggestions()
+  }, [debouncedSearchTerm])
 
   // Fetch weather data
   useEffect(() => {
     const fetchWeather = async () => {
-      setWeatherLoading(true);
+      setWeatherLoading(true)
       try {
-        const temperature = await getCurrentWeather();
-        setCurrentTemperature(temperature);
+        const temperature = await getCurrentWeather()
+        setCurrentTemperature(temperature)
       } catch (err) {
-        setWeatherError("Error fetching weather data");
-        console.error("Error fetching weather data:", err);
+        setWeatherError("Error fetching weather data")
+        console.error("Error fetching weather data:", err)
       } finally {
-        setWeatherLoading(false);
+        setWeatherLoading(false)
       }
-    };
+    }
 
-    fetchWeather();
-  }, []);
+    fetchWeather()
+  }, [])
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false)
+      }
+      if (searchRef.current && !searchRef.current.contains(event.target as Node) && suggestions.length > 0) {
+        setSuggestions([])
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [suggestions.length])
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
+
+  // Toggle dark mode
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }, [isDarkMode])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
+    setSearchTerm(e.target.value)
+  }
 
-  const handleSidebarToggle = () => {
-    setSidebar(!sidebar);
-  };
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode)
+  }
 
   return (
-    <div className="flex flex-col w-full lg:px-0 lg:w-3/4 mx-auto lg:gap-10 relative">
-      <div className='flex flex-row text-white text-base m-2 justify-end w-full mx-auto gap-2'>
-        <Link href={'/admin/contacts'} className="text-sm">Contacts</Link>
-        <Link href={'/admin/surveys'} className="text-sm">Surveys</Link>
-        <Link href={'/admin/complaints'} className="text-sm">Complaints</Link>
-        <Link href={'/admin/editor'} className="text-sm">Publish</Link>
-      </div>
+    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-30">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo and Mobile Menu Button */}
+          <div className="flex items-center">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden mr-4 p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 focus:outline-none"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
 
-      {/* Header Section */}
-      <div className="flex w-full flex-col gap-14 lg:gap-0 items-center justify-between lg:flex-row lg:justify-between py-6 lg:py-10 relative">
-        <Link href="/admin/articles" className="text-gray-200 text-3xl md:text-3xl lg:text-4xl font-thin" >ADMIN</Link>
+            <Link href="/admin" className="flex items-center">
+              <span className="text-xl font-bold text-gray-800 dark:text-white">MMMUT</span>
+              <span className="ml-1 text-xl font-bold text-blue-600 dark:text-blue-400">Admin</span>
+            </Link>
+          </div>
 
-        <div className="relative flex-grow lg:flex-grow-0 w-full lg:w-auto lg:ml-auto px-2 lg:px-0">
-          <input
-            type="text"
-            placeholder="Search for headlines"
-            className="bg-[#04594D] py-1 px-2 lg:py-1 lg:px-6 w-full lg:w-[35vw] text-white outline-none focus:ring-0 focus:border-transparent text-sm lg:text-lg rounded-md lg:rounded-none"
-            value={searchTerm}
-            onChange={handleInputChange}
-          />
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => {
+              const isActive = pathname === item.path || 
+                (item.path !== "/admin" && pathname.startsWith(item.path))
+              
+              return (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive
+                      ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
+          </nav>
 
-          {/* Suggestions Dropdown */}
-          {suggestions.length > 0 && (
-            <div className="bg-white absolute left-0 lg:left-auto lg:right-0 rounded-md mt-2 shadow-lg w-full lg:w-[35vw] max-h-40 overflow-y-auto z-50">
-              <ul>
-                {suggestions.map(({ _id, title }) => (
-                  <li
-                    key={_id}
-                    className="px-2 py-1 text-sm lg:text-base lg:p-2 hover:bg-gray-200"
-                  >
-                    <Link href={`/admin/article/${_id}`} className="block">
-                      {title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          {/* Right Side - Search, Weather, User Menu */}
+          <div className="flex items-center space-x-4">
+            {/* Search */}
+            <div className="relative" ref={searchRef}>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search articles..."
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                  className="w-full md:w-64 pl-10 pr-4 py-2 text-sm bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent text-gray-800 dark:text-white"
+                />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
+              </div>
+
+              {/* Suggestions Dropdown */}
+              {suggestions.length > 0 && (
+                <div className="absolute left-0 right-0 mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 max-h-60 overflow-y-auto z-50">
+                  <ul>
+                    {suggestions.map(({ _id, title }) => (
+                      <li key={_id} className="border-b border-gray-100 dark:border-gray-700 last:border-0">
+                        <Link
+                          href={`/admin/article/${_id}`}
+                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Weather */}
+            {typeof currentTemperature === "number" && (
+              <div className="hidden md:flex items-center text-sm text-gray-600 dark:text-gray-300">
+                {weatherLoading ? (
+                  <Loader variant="small" />
+                ) : weatherError ? (
+                  <span className="text-red-500">Error</span>
+                ) : (
+                  <div className="flex items-center">
+                    <Thermometer className="h-4 w-4 mr-1 text-blue-500" />
+                    <span>{currentTemperature.toFixed(1)}°C</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 focus:outline-none"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </button>
+
+            {/* Notifications */}
+            <button className="p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 focus:outline-none relative">
+              <Bell className="h-5 w-5" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+
+            {/* User Menu */}
+            <div className="relative" ref={userMenuRef}>
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white focus:outline-none"
+              >
+                <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                  <User className="h-5 w-5" />
+                </div>
+                <span className="ml-2 hidden md:block">Admin User</span>
+                <ChevronDown className="ml-1 h-4 w-4" />
+              </button>
+
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 border border-gray-200 dark:border-gray-700 z-50">
+                  <Link
+                    href="/admin/profile"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <User className="mr-2 h-4 w-4" />
+                    Your Profile
+                  </Link>
+                  <Link
+                    href="/admin/settings"
+                    className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <Settings className="mr-2 h-4 w-4" />
+                    Settings
+                  </Link>
+                  <div className="border-t border-gray-200 dark:border-gray-700"></div>
+                  <button
+                    className="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Navigation Section */}
-      <div className="h-0 lg:h-auto">
-        <ul className="h-0 lg:h-auto hidden lg:visible lg:flex justify-between items-center bg-[#1f1f1f] text-white text-base">
-          {tags.map((tag) => {
-            const tagPath = `/admin/articles/${tag.toLowerCase().replace(" ", "_")}`;
-            const isActive = activePath === tagPath;
+      {/* Mobile Navigation Menu */}
+      <div
+        className={`md:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 ${
+          isMobileMenuOpen ? "block" : "hidden"
+        }`}
+      >
+        <nav className="px-2 pt-2 pb-3 space-y-1">
+          {navItems.map((item) => {
+            const isActive = pathname === item.path || 
+              (item.path !== "/admin" && pathname.startsWith(item.path))
+            
             return (
-              <li key={tag} className="h-0 lg:h-auto p-2">
-                <Link href={tagPath} className={`${isActive ? "bg-[#04594D] h-full p-2 font-extralight" : "text-white"}`}>
-                  {tag}
-                </Link>
-              </li>
-            );
+              <Link
+                key={item.name}
+                href={item.path}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                  isActive
+                    ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
+                }`}
+              >
+                {item.name}
+              </Link>
+            )
           })}
-          {typeof currentTemperature === "number" && (
-            <li className="px-4 py-2">
-              {weatherLoading ? (
-                <Loader variant="small" />
-              ) : weatherError ? (
-                "Error"
-              ) : (
-                <span>
-                  Temperature: {currentTemperature?.toFixed(1)}°C
-                </span>
-              )}
-            </li>
-          )}
-        </ul>
+        </nav>
       </div>
-
-      {/* Sidebar icon for mobile device */}
-      <div className="text-white text-center lg:hidden flex items-center justify-center h-auto pb-2" onClick={handleSidebarToggle}>
-        {sidebar ? (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 384 512"
-            className="h-4"
-          >
-            <path
-              fill="#ffffff"
-              d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"
-            />
-          </svg>
-        ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-            className="h-4"
-          >
-            <path
-              fill="#fbfefe"
-              d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
-            />
-          </svg>
-        )}
-      </div>
-
-      {/*Sidebar for mobile device*/}
-      <div className={`lg:hidden overflow-hidden transition-all duration-700 w-full ${sidebar ? "max-h-screen" : "max-h-0"}`}>
-        <ul className="flex flex-col lg:flex-row justify-between items-start bg-[#1A1A1A] text-white w-full pt-0 p-2">
-          {tags.map((tag) => {
-            const tagPath = `/${tag.toLowerCase().replace(" ", "_")}`;
-            const isActive = activePath === tagPath;
-            return (
-              <li key={tag} className="w-full">
-                <Link
-                  href={tagPath}
-                  className={`py-1 px-2 block text-base ${isActive ? "bg-[#04594D]" : "text-white"}`}
-                >
-                  {tag}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="lg:hidden absolute top-2 right-0">
-        {typeof currentTemperature === "number" && (
-          <li className="px-4 py-2 text-white list-none text-sm">
-            {currentTemperature.toFixed(1)}°C
-          </li>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default HeaderAdmin;
+    </header>
+  )
+}
