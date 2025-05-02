@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef, type ChangeEvent } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Search, Menu, X, Bell, User, Settings, LogOut, ChevronDown, Sun, Moon, Thermometer } from 'lucide-react'
+import { usePathname, useRouter } from "next/navigation"
+import { Search, Menu, X, User, LogOut, ChevronDown, Sun, Moon, Thermometer } from 'lucide-react'
 import { getCurrentWeather } from "@/app/services/external/weather"
 import getArticlesSuggestionsAction from "@/app/Actions/article-suggestions/getArticleSuggestionsAction"
 import { Loader } from "../spinner"
+import { toast } from "@/hooks/use-toast"
 
 // Custom hook for debounce
 function useDebounce<T>(value: T, delay: number): T {
@@ -34,11 +35,12 @@ export default function HeaderAdmin() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
-  
+
   const pathname = usePathname()
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
   const userMenuRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLDivElement>(null)
+  const router = useRouter();
 
   // Navigation items
   const navItems = [
@@ -161,18 +163,17 @@ export default function HeaderAdmin() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
-              const isActive = pathname === item.path || 
+              const isActive = pathname === item.path ||
                 (item.path !== "/admin" && pathname.startsWith(item.path))
-              
+
               return (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium ${
-                    isActive
+                  className={`px-3 py-2 rounded-md text-sm font-medium ${isActive
                       ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
-                  }`}
+                    }`}
                 >
                   {item.name}
                 </Link>
@@ -243,12 +244,6 @@ export default function HeaderAdmin() {
               )}
             </button>
 
-            {/* Notifications */}
-            <button className="p-2 rounded-md text-gray-500 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 focus:outline-none relative">
-              <Bell className="h-5 w-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
-
             {/* User Menu */}
             <div className="relative" ref={userMenuRef}>
               <button
@@ -264,23 +259,17 @@ export default function HeaderAdmin() {
 
               {isUserMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 border border-gray-200 dark:border-gray-700 z-50">
-                  <Link
-                    href="/admin/profile"
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    Your Profile
-                  </Link>
-                  <Link
-                    href="/admin/settings"
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
-                  </Link>
                   <div className="border-t border-gray-200 dark:border-gray-700"></div>
                   <button
                     className="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => {
+                      router.push("/");
+                      toast({
+                        title: "Success",
+                        description: "Logged out",
+                        variant: "default",
+                      })
+                    }}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
                     Sign out
@@ -294,24 +283,22 @@ export default function HeaderAdmin() {
 
       {/* Mobile Navigation Menu */}
       <div
-        className={`md:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 ${
-          isMobileMenuOpen ? "block" : "hidden"
-        }`}
+        className={`md:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 ${isMobileMenuOpen ? "block" : "hidden"
+          }`}
       >
         <nav className="px-2 pt-2 pb-3 space-y-1">
           {navItems.map((item) => {
-            const isActive = pathname === item.path || 
+            const isActive = pathname === item.path ||
               (item.path !== "/admin" && pathname.startsWith(item.path))
-            
+
             return (
               <Link
                 key={item.name}
                 href={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  isActive
+                className={`block px-3 py-2 rounded-md text-base font-medium ${isActive
                     ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700"
-                }`}
+                  }`}
               >
                 {item.name}
               </Link>

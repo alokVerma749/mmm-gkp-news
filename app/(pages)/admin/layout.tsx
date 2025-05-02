@@ -14,10 +14,7 @@ import {
   ClipboardList,
   ChevronRight,
   ChevronDown,
-  FolderOpen,
-  Settings,
-  BarChart3,
-  Home,
+  FolderOpen, Home
 } from "lucide-react"
 import HeaderAdmin from "@/app/components/headerAdmin/HeaderAdmin"
 
@@ -153,30 +150,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 )
               })}
             </nav>
-
-            <div className="mt-8 px-4">
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Admin Tools
-                </h3>
-                <nav className="mt-2 space-y-1">
-                  <Link
-                    href="/admin/settings"
-                    className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-                  >
-                    <Settings className="h-5 w-5 mr-3" />
-                    Settings
-                  </Link>
-                  <Link
-                    href="/admin/analytics"
-                    className="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-                  >
-                    <BarChart3 className="h-5 w-5 mr-3" />
-                    Analytics
-                  </Link>
-                </nav>
-              </div>
-            </div>
           </div>
         </aside>
 
